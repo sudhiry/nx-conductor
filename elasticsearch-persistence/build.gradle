@@ -1,0 +1,67 @@
+plugins {
+    id 'com.netflix.conductor.java-common-conventions'
+    id 'org.springframework.boot' version '2.7.14'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+
+    configureEach {
+        exclude group: 'ch.qos.logback', module: 'logback-classic'
+        exclude group: 'ch.qos.logback', module: 'logback-core'
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
+}
+
+ext {
+    conductorVersion = '3.13.8'
+    openapiVersion = '1.6.+'
+    testcontainersVersion = '1.18.3'
+    guavaVersion = '30.0-jre' // 32.1.2-jre
+}
+
+dependencies {
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.data:spring-data-elasticsearch:4.4.14'
+    implementation 'org.springframework.retry:spring-retry'
+
+    implementation "com.fasterxml.jackson.core:jackson-annotations"
+    implementation "com.fasterxml.jackson.core:jackson-databind"
+    implementation "com.netflix.conductor:conductor-core:${conductorVersion}"
+    implementation "com.netflix.conductor:conductor-common:${conductorVersion}"
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    implementation "com.google.guava:guava:${guavaVersion}"
+    implementation "com.fasterxml.jackson.core:jackson-databind"
+    implementation "com.fasterxml.jackson.core:jackson-core"
+    implementation "org.apache.commons:commons-lang3"
+    implementation "org.javatuples:javatuples:1.2"
+    implementation "commons-io:commons-io:2.7"
+
+    testImplementation "net.java.dev.jna:jna:5.7.0"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation "org.awaitility:awaitility:3.1.6"
+    testImplementation "org.testcontainers:elasticsearch:1.18.3"
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
