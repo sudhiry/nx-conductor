@@ -1,0 +1,4 @@
+plugins {
+    id 'com.netflix.conductor.java-common-conventions'
+    id 'application'
+}
