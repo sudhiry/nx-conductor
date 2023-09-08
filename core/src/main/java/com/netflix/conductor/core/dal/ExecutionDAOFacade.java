@@ -23,28 +23,24 @@ import com.netflix.conductor.common.run.SearchResult;
 import com.netflix.conductor.common.run.TaskSummary;
 import com.netflix.conductor.common.run.Workflow;
 import com.netflix.conductor.common.run.WorkflowSummary;
-import com.netflix.conductor.common.utils.ExternalPayloadStorage;
 import com.netflix.conductor.core.config.ConductorProperties;
-import com.netflix.conductor.core.events.queue.Message;
+import com.netflix.conductor.core.events.Message;
 import com.netflix.conductor.core.exception.NotFoundException;
 import com.netflix.conductor.core.exception.TerminateWorkflowException;
 import com.netflix.conductor.core.exception.TransientException;
-import com.netflix.conductor.core.utils.ExternalPayloadStorageUtils;
 import com.netflix.conductor.core.utils.QueueUtils;
 import com.netflix.conductor.dao.*;
 import com.netflix.conductor.metrics.Monitors;
 import com.netflix.conductor.model.TaskModel;
 import com.netflix.conductor.model.WorkflowModel;
-import org.apache.commons.lang3.StringUtils;
+import jakarta.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PreDestroy;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -73,7 +69,6 @@ public class ExecutionDAOFacade {
     private final PollDataDAO pollDataDAO;
     private final ObjectMapper objectMapper;
     private final ConductorProperties properties;
-    private final ExternalPayloadStorageUtils externalPayloadStorageUtils;
 
     private final ScheduledThreadPoolExecutor scheduledThreadPoolExecutor;
 
@@ -85,8 +80,7 @@ public class ExecutionDAOFacade {
             ConcurrentExecutionLimitDAO concurrentExecutionLimitDAO,
             PollDataDAO pollDataDAO,
             ObjectMapper objectMapper,
-            ConductorProperties properties,
-            ExternalPayloadStorageUtils externalPayloadStorageUtils) {
+            ConductorProperties properties) {
         this.executionDAO = executionDAO;
         this.queueDAO = queueDAO;
         this.indexDAO = indexDAO;
@@ -95,7 +89,6 @@ public class ExecutionDAOFacade {
         this.pollDataDAO = pollDataDAO;
         this.objectMapper = objectMapper;
         this.properties = properties;
-        this.externalPayloadStorageUtils = externalPayloadStorageUtils;
         this.scheduledThreadPoolExecutor =
                 new ScheduledThreadPoolExecutor(
                         4,
@@ -132,9 +125,7 @@ public class ExecutionDAOFacade {
     }
 
     public WorkflowModel getWorkflowModel(String workflowId, boolean includeTasks) {
-        WorkflowModel workflowModel = getWorkflowModelFromDataStore(workflowId, includeTasks);
-        populateWorkflowAndTaskPayloadData(workflowModel);
-        return workflowModel;
+        return getWorkflowModelFromDataStore(workflowId, includeTasks);
     }
 
     /**
@@ -246,7 +237,6 @@ public class ExecutionDAOFacade {
      * @return the id of the created workflow
      */
     public String createWorkflow(WorkflowModel workflowModel) {
-        externalizeWorkflowData(workflowModel);
         executionDAO.createWorkflow(workflowModel);
         // Add to decider queue
         queueDAO.push(
@@ -262,20 +252,6 @@ public class ExecutionDAOFacade {
         return workflowModel.getWorkflowId();
     }
 
-    private void externalizeTaskData(TaskModel taskModel) {
-        externalPayloadStorageUtils.verifyAndUpload(
-                taskModel, ExternalPayloadStorage.PayloadType.TASK_INPUT);
-        externalPayloadStorageUtils.verifyAndUpload(
-                taskModel, ExternalPayloadStorage.PayloadType.TASK_OUTPUT);
-    }
-
-    private void externalizeWorkflowData(WorkflowModel workflowModel) {
-        externalPayloadStorageUtils.verifyAndUpload(
-                workflowModel, ExternalPayloadStorage.PayloadType.WORKFLOW_INPUT);
-        externalPayloadStorageUtils.verifyAndUpload(
-                workflowModel, ExternalPayloadStorage.PayloadType.WORKFLOW_OUTPUT);
-    }
-
     /**
      * Updates the given workflow in the data store
      *
@@ -287,7 +263,6 @@ public class ExecutionDAOFacade {
         if (workflowModel.getStatus().isTerminal()) {
             workflowModel.setEndTime(System.currentTimeMillis());
         }
-        externalizeWorkflowData(workflowModel);
         executionDAO.updateWorkflow(workflowModel);
         if (properties.isAsyncIndexingEnabled()) {
             if (workflowModel.getStatus().isTerminal()
@@ -432,7 +407,6 @@ public class ExecutionDAOFacade {
     }
 
     public List<TaskModel> createTasks(List<TaskModel> tasks) {
-        tasks.forEach(this::externalizeTaskData);
         return executionDAO.createTasks(tasks);
     }
 
@@ -443,11 +417,7 @@ public class ExecutionDAOFacade {
     }
 
     public TaskModel getTaskModel(String taskId) {
-        TaskModel taskModel = getTaskFromDatastore(taskId);
-        if (taskModel != null) {
-            populateTaskData(taskModel);
-        }
-        return taskModel;
+        return getTaskFromDatastore(taskId);
     }
 
     public Task getTask(String taskId) {
@@ -498,7 +468,6 @@ public class ExecutionDAOFacade {
                 taskModel.setEndTime(System.currentTimeMillis());
             }
         }
-        externalizeTaskData(taskModel);
         executionDAO.updateTask(taskModel);
         try {
             /*
@@ -687,63 +656,6 @@ public class ExecutionDAOFacade {
         return properties.isTaskExecLogIndexingEnabled()
                 ? indexDAO.getTaskExecutionLogs(taskId)
                 : Collections.emptyList();
-    }
-
-    /**
-     * Populates the workflow input data and the tasks input/output data if stored in external
-     * payload storage.
-     *
-     * @param workflowModel the workflowModel for which the payload data needs to be populated from
-     *     external storage (if applicable)
-     */
-    public void populateWorkflowAndTaskPayloadData(WorkflowModel workflowModel) {
-        if (StringUtils.isNotBlank(workflowModel.getExternalInputPayloadStoragePath())) {
-            Map<String, Object> workflowInputParams =
-                    externalPayloadStorageUtils.downloadPayload(
-                            workflowModel.getExternalInputPayloadStoragePath());
-            Monitors.recordExternalPayloadStorageUsage(
-                    workflowModel.getWorkflowName(),
-                    ExternalPayloadStorage.Operation.READ.toString(),
-                    ExternalPayloadStorage.PayloadType.WORKFLOW_INPUT.toString());
-            workflowModel.internalizeInput(workflowInputParams);
-        }
-
-        if (StringUtils.isNotBlank(workflowModel.getExternalOutputPayloadStoragePath())) {
-            Map<String, Object> workflowOutputParams =
-                    externalPayloadStorageUtils.downloadPayload(
-                            workflowModel.getExternalOutputPayloadStoragePath());
-            Monitors.recordExternalPayloadStorageUsage(
-                    workflowModel.getWorkflowName(),
-                    ExternalPayloadStorage.Operation.READ.toString(),
-                    ExternalPayloadStorage.PayloadType.WORKFLOW_OUTPUT.toString());
-            workflowModel.internalizeOutput(workflowOutputParams);
-        }
-
-        workflowModel.getTasks().forEach(this::populateTaskData);
-    }
-
-    public void populateTaskData(TaskModel taskModel) {
-        if (StringUtils.isNotBlank(taskModel.getExternalOutputPayloadStoragePath())) {
-            Map<String, Object> outputData =
-                    externalPayloadStorageUtils.downloadPayload(
-                            taskModel.getExternalOutputPayloadStoragePath());
-            taskModel.internalizeOutput(outputData);
-            Monitors.recordExternalPayloadStorageUsage(
-                    taskModel.getTaskDefName(),
-                    ExternalPayloadStorage.Operation.READ.toString(),
-                    ExternalPayloadStorage.PayloadType.TASK_OUTPUT.toString());
-        }
-
-        if (StringUtils.isNotBlank(taskModel.getExternalInputPayloadStoragePath())) {
-            Map<String, Object> inputData =
-                    externalPayloadStorageUtils.downloadPayload(
-                            taskModel.getExternalInputPayloadStoragePath());
-            taskModel.internalizeInput(inputData);
-            Monitors.recordExternalPayloadStorageUsage(
-                    taskModel.getTaskDefName(),
-                    ExternalPayloadStorage.Operation.READ.toString(),
-                    ExternalPayloadStorage.PayloadType.TASK_INPUT.toString());
-        }
     }
 
     class DelayWorkflowUpdate implements Runnable {

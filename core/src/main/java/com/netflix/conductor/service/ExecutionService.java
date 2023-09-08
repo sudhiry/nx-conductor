@@ -16,12 +16,9 @@ import com.netflix.conductor.annotations.Trace;
 import com.netflix.conductor.common.metadata.events.EventExecution;
 import com.netflix.conductor.common.metadata.tasks.*;
 import com.netflix.conductor.common.run.*;
-import com.netflix.conductor.common.utils.ExternalPayloadStorage;
-import com.netflix.conductor.common.utils.ExternalPayloadStorage.Operation;
-import com.netflix.conductor.common.utils.ExternalPayloadStorage.PayloadType;
 import com.netflix.conductor.core.config.ConductorProperties;
 import com.netflix.conductor.core.dal.ExecutionDAOFacade;
-import com.netflix.conductor.core.events.queue.Message;
+import com.netflix.conductor.core.events.Message;
 import com.netflix.conductor.core.exception.NotFoundException;
 import com.netflix.conductor.core.execution.WorkflowExecutor;
 import com.netflix.conductor.core.execution.tasks.SystemTaskRegistry;
@@ -47,9 +44,7 @@ public class ExecutionService {
     private final WorkflowExecutor workflowExecutor;
     private final ExecutionDAOFacade executionDAOFacade;
     private final QueueDAO queueDAO;
-    private final ExternalPayloadStorage externalPayloadStorage;
     private final SystemTaskRegistry systemTaskRegistry;
-
     private final long queueTaskMessagePostponeSecs;
 
     private static final int MAX_POLL_TIMEOUT_MS = 5000;
@@ -61,12 +56,10 @@ public class ExecutionService {
             ExecutionDAOFacade executionDAOFacade,
             QueueDAO queueDAO,
             ConductorProperties properties,
-            ExternalPayloadStorage externalPayloadStorage,
             SystemTaskRegistry systemTaskRegistry) {
         this.workflowExecutor = workflowExecutor;
         this.executionDAOFacade = executionDAOFacade;
         this.queueDAO = queueDAO;
-        this.externalPayloadStorage = externalPayloadStorage;
 
         this.queueTaskMessagePostponeSecs =
                 properties.getTaskExecutionPostponeDuration().getSeconds();
@@ -578,28 +571,5 @@ public class ExecutionService {
         return executionDAOFacade.getTaskExecutionLogs(taskId);
     }
 
-    /**
-     * Get external uri for the payload
-     *
-     * @param path the path for which the external storage location is to be populated
-     * @param operation the type of {@link Operation} to be performed
-     * @param type the {@link PayloadType} at the external uri
-     * @return the external uri at which the payload is stored/to be stored
-     */
-    public ExternalStorageLocation getExternalStorageLocation(
-            String path, String operation, String type) {
-        try {
-            Operation payloadOperation =
-                    Operation.valueOf(StringUtils.upperCase(operation));
-            PayloadType payloadType =
-                    PayloadType.valueOf(StringUtils.upperCase(type));
-            return externalPayloadStorage.getLocation(payloadOperation, payloadType, path);
-        } catch (Exception e) {
-            String errorMsg =
-                    String.format(
-                            "Invalid input - Operation: %s, PayloadType: %s", operation, type);
-            LOGGER.error(errorMsg);
-            throw new IllegalArgumentException(errorMsg);
-        }
-    }
+
 }

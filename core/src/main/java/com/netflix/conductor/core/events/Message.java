@@ -12,12 +12,34 @@
  */
 package com.netflix.conductor.core.events;
 
-import com.netflix.conductor.common.metadata.events.EventHandler;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Map;
+@Data
+@NoArgsConstructor
+public class Message {
 
-public interface ActionProcessor {
+    private String payload;
+    private String id;
+    private String receipt;
+    private int priority;
 
-    Map<String, Object> execute(
-            EventHandler.Action action, Object payloadObject, String event, String messageId);
+    public Message(String id, String payload, String receipt) {
+        this.payload = payload;
+        this.id = id;
+        this.receipt = receipt;
+    }
+
+    public Message(String id, String payload, String receipt, int priority) {
+        this.payload = payload;
+        this.id = id;
+        this.receipt = receipt;
+        this.priority = priority;
+    }
+
+    @Override
+    public String toString() {
+        return id;
+    }
+
 }

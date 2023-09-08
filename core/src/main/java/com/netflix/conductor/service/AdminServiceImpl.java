@@ -1,22 +1,9 @@
-/*
- * Copyright 2022 Netflix, Inc.
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
- */
 package com.netflix.conductor.service;
 
 import com.netflix.conductor.annotations.Audit;
 import com.netflix.conductor.annotations.Trace;
 import com.netflix.conductor.common.metadata.tasks.Task;
 import com.netflix.conductor.core.config.ConductorProperties;
-import com.netflix.conductor.core.events.EventQueueManager;
 import com.netflix.conductor.core.reconciliation.WorkflowRepairService;
 import com.netflix.conductor.core.utils.Utils;
 import com.netflix.conductor.dao.QueueDAO;
@@ -34,7 +21,6 @@ public class AdminServiceImpl implements AdminService {
     private final ExecutionService executionService;
     private final QueueDAO queueDAO;
     private final WorkflowRepairService workflowRepairService;
-    private final EventQueueManager eventQueueManager;
     private final BuildProperties buildProperties;
 
     public AdminServiceImpl(
@@ -42,13 +28,11 @@ public class AdminServiceImpl implements AdminService {
             ExecutionService executionService,
             QueueDAO queueDAO,
             Optional<WorkflowRepairService> workflowRepairService,
-            Optional<EventQueueManager> eventQueueManager,
             Optional<BuildProperties> buildProperties) {
         this.properties = properties;
         this.executionService = executionService;
         this.queueDAO = queueDAO;
         this.workflowRepairService = workflowRepairService.orElse(null);
-        this.eventQueueManager = eventQueueManager.orElse(null);
         this.buildProperties = buildProperties.orElse(null);
     }
 
@@ -124,10 +108,10 @@ public class AdminServiceImpl implements AdminService {
      * @param verbose `true|false` for verbose logs
      * @return map of event queues
      */
-    public Map<String, ?> getEventQueues(boolean verbose) {
-        if (eventQueueManager == null) {
-            throw new IllegalStateException("Event processing is DISABLED");
-        }
-        return (verbose ? eventQueueManager.getQueueSizes() : eventQueueManager.getQueues());
-    }
+//    public Map<String, ?> getEventQueues(boolean verbose) {
+//        if (eventQueueManager == null) {
+//            throw new IllegalStateException("Event processing is DISABLED");
+//        }
+//        return (verbose ? eventQueueManager.getQueueSizes() : eventQueueManager.getQueues());
+//    }
 }

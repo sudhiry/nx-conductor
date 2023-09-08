@@ -15,8 +15,6 @@ package com.netflix.conductor.core.operation;
 import com.netflix.conductor.common.metadata.workflow.WorkflowDef;
 import com.netflix.conductor.core.WorkflowContext;
 import com.netflix.conductor.core.dal.ExecutionDAOFacade;
-import com.netflix.conductor.core.event.WorkflowCreationEvent;
-import com.netflix.conductor.core.event.WorkflowEvaluationEvent;
 import com.netflix.conductor.core.exception.TransientException;
 import com.netflix.conductor.core.execution.StartWorkflowInput;
 import com.netflix.conductor.core.metadata.MetadataMapperService;
@@ -67,10 +65,11 @@ public class StartWorkflowOperation implements WorkflowOperation<StartWorkflowIn
         return startWorkflow(input);
     }
 
-    @EventListener(WorkflowCreationEvent.class)
-    public void handleWorkflowCreationEvent(WorkflowCreationEvent workflowCreationEvent) {
-        startWorkflow(workflowCreationEvent.getStartWorkflowInput());
-    }
+    // FIXME
+//    @EventListener(WorkflowCreationEvent.class)
+//    public void handleWorkflowCreationEvent(WorkflowCreationEvent workflowCreationEvent) {
+//        startWorkflow(workflowCreationEvent.getStartWorkflowInput());
+//    }
 
     private String startWorkflow(StartWorkflowInput input) {
         WorkflowDef workflowDefinition;
@@ -111,13 +110,9 @@ public class StartWorkflowOperation implements WorkflowOperation<StartWorkflowIn
         workflow.setTaskToDomain(input.getTaskToDomain());
         workflow.setVariables(workflowDefinition.getVariables());
 
-        if (workflowInput != null && !workflowInput.isEmpty()) {
-            Map<String, Object> parsedInput =
-                    parametersUtils.getWorkflowInput(workflowDefinition, workflowInput);
-            workflow.setInput(parsedInput);
-        } else {
-            workflow.setExternalInputPayloadStoragePath(externalInputPayloadStoragePath);
-        }
+        Map<String, Object> parsedInput =
+                parametersUtils.getWorkflowInput(workflowDefinition, workflowInput);
+        workflow.setInput(parsedInput);
 
         try {
             createAndEvaluate(workflow);
@@ -156,8 +151,11 @@ public class StartWorkflowOperation implements WorkflowOperation<StartWorkflowIn
                     "A new instance of workflow: {} created with id: {}",
                     workflow.getWorkflowName(),
                     workflow.getWorkflowId());
-            executionDAOFacade.populateWorkflowAndTaskPayloadData(workflow);
-            eventPublisher.publishEvent(new WorkflowEvaluationEvent(workflow));
+            // FIXME
+//            executionDAOFacade.populateWorkflowAndTaskPayloadData(workflow);
+
+            // FIXME
+            // eventPublisher.publishEvent(new WorkflowEvaluationEvent(workflow));
         } finally {
             executionLockService.releaseLock(workflow.getWorkflowId());
         }

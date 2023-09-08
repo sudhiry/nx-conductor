@@ -92,11 +92,13 @@ public class TaskSummary {
         this.queueWaitTime = task.getQueueWaitTime();
         this.domain = task.getDomain();
         if (task.getInputData() != null) {
-            this.input = SummaryUtil.serializeInputOutput(task.getInputData());
+            // FIXME
+//            this.input = SummaryUtil.serializeInputOutput(task.getInputData());
         }
 
         if (task.getOutputData() != null) {
-            this.output = SummaryUtil.serializeInputOutput(task.getOutputData());
+            // FIXME
+//            this.output = SummaryUtil.serializeInputOutput(task.getOutputData());
         }
 
         if (task.getEndTime() > 0) {

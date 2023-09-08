@@ -14,9 +14,11 @@ package com.netflix.conductor.core.exception;
 
 import com.netflix.conductor.model.TaskModel;
 import com.netflix.conductor.model.WorkflowModel;
+import lombok.Getter;
 
 import static com.netflix.conductor.model.WorkflowModel.Status.FAILED;
 
+@Getter
 public class TerminateWorkflowException extends RuntimeException {
 
     private final WorkflowModel.Status workflowStatus;
@@ -37,11 +39,4 @@ public class TerminateWorkflowException extends RuntimeException {
         this.task = task;
     }
 
-    public WorkflowModel.Status getWorkflowStatus() {
-        return workflowStatus;
-    }
-
-    public TaskModel getTask() {
-        return task;
-    }
 }

@@ -130,4 +130,8 @@ public class TaskDef extends BaseDef {
         this.timeoutSeconds = timeoutSeconds;
         this.responseTimeoutSeconds = responseTimeoutSeconds;
     }
+
+    public int concurrencyLimit() {
+        return concurrentExecLimit == null ? 0 : concurrentExecLimit;
+    }
 }

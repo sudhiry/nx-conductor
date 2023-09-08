@@ -54,7 +54,7 @@ public class EventTaskMapper implements TaskMapper {
         String taskId = taskMapperContext.getTaskId();
 
         workflowTask.getInputParameters().put("sink", workflowTask.getSink());
-        workflowTask.getInputParameters().put("asyncComplete", workflowTask.isAsyncComplete());
+        workflowTask.getInputParameters().put("asyncComplete", workflowTask.getAsyncComplete());
         Map<String, Object> eventTaskInput =
                 parametersUtils.getTaskInputV2(
                         workflowTask.getInputParameters(), workflowModel, taskId, null);

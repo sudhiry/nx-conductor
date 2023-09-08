@@ -24,8 +24,6 @@ import com.netflix.conductor.common.utils.TaskUtils;
 import com.netflix.conductor.core.WorkflowContext;
 import com.netflix.conductor.core.config.ConductorProperties;
 import com.netflix.conductor.core.dal.ExecutionDAOFacade;
-import com.netflix.conductor.core.event.WorkflowCreationEvent;
-import com.netflix.conductor.core.event.WorkflowEvaluationEvent;
 import com.netflix.conductor.core.exception.*;
 import com.netflix.conductor.core.execution.tasks.SystemTaskRegistry;
 import com.netflix.conductor.core.execution.tasks.Terminate;
@@ -233,7 +231,6 @@ public class WorkflowExecutor {
         // Change the status to running
         workflow.setStatus(WorkflowModel.Status.RUNNING);
         workflow.setOutput(null);
-        workflow.setExternalOutputPayloadStoragePath(null);
 
         try {
             executionDAOFacade.createWorkflow(workflow);
@@ -666,7 +663,8 @@ public class WorkflowExecutor {
                     startWorkflowInput.setWorkflowId(failureWFId);
                     startWorkflowInput.setTriggeringWorkflowId(workflowId);
 
-                    eventPublisher.publishEvent(new WorkflowCreationEvent(startWorkflowInput));
+                    // FIXME
+//                    eventPublisher.publishEvent(new WorkflowCreationEvent(startWorkflowInput));
 
                     workflow.addOutput("conductor.failure_workflow", failureWFId);
                 } catch (Exception e) {
@@ -1000,10 +998,11 @@ public class WorkflowExecutor {
         return executionDAOFacade.getRunningWorkflowIds(workflowName, version);
     }
 
-    @EventListener(WorkflowEvaluationEvent.class)
-    public void handleWorkflowEvaluationEvent(WorkflowEvaluationEvent wee) {
-        decide(wee.getWorkflowModel());
-    }
+    // FIXME
+//    @EventListener(WorkflowEvaluationEvent.class)
+//    public void handleWorkflowEvaluationEvent(WorkflowEvaluationEvent wee) {
+//        decide(wee.getWorkflowModel());
+//    }
 
     /** Records a metric for the "decide" process. */
     public WorkflowModel decide(String workflowId) {
@@ -1062,7 +1061,8 @@ public class WorkflowExecutor {
             boolean stateChanged = scheduleTask(workflow, tasksToBeScheduled); // start
 
             for (TaskModel task : outcome.tasksToBeScheduled) {
-                executionDAOFacade.populateTaskData(task);
+                // FIXME
+//                executionDAOFacade.populateTaskData(task);
                 if (systemTaskRegistry.isSystemTask(task.getTaskType())
                         && NON_TERMINAL_TASK.test(task)) {
                     WorkflowSystemTask workflowSystemTask =

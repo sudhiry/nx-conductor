@@ -19,7 +19,6 @@ import org.springframework.stereotype.Component;
 
 import static com.netflix.conductor.common.metadata.tasks.TaskType.TASK_TYPE_SWITCH;
 
-/** {@link Switch} task is a replacement for now deprecated {@link Decision} task. */
 @Component(TASK_TYPE_SWITCH)
 public class Switch extends WorkflowSystemTask {
 

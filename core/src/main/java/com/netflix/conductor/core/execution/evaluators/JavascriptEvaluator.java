@@ -12,7 +12,6 @@
  */
 package com.netflix.conductor.core.execution.evaluators;
 
-import com.netflix.conductor.core.events.ScriptEvaluator;
 import com.netflix.conductor.core.exception.TerminateWorkflowException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -12,7 +12,7 @@
  */
 package com.netflix.conductor.dao;
 
-import com.netflix.conductor.core.events.queue.Message;
+import com.netflix.conductor.core.events.Message;
 
 import java.util.List;
 import java.util.Map;

@@ -13,7 +13,6 @@
 package com.netflix.conductor.service;
 
 import com.netflix.conductor.common.metadata.events.EventHandler;
-import com.netflix.conductor.core.events.EventQueues;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class EventServiceImpl implements EventService {
 
     private final MetadataService metadataService;
 
-    public EventServiceImpl(MetadataService metadataService, EventQueues eventQueues) {
+    public EventServiceImpl(MetadataService metadataService) {
         this.metadataService = metadataService;
     }
 

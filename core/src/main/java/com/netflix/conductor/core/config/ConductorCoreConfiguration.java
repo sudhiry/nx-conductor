@@ -12,8 +12,6 @@
  */
 package com.netflix.conductor.core.config;
 
-import com.netflix.conductor.common.utils.ExternalPayloadStorage;
-import com.netflix.conductor.core.events.EventQueueProvider;
 import com.netflix.conductor.core.exception.TransientException;
 import com.netflix.conductor.core.execution.mapper.TaskMapper;
 import com.netflix.conductor.core.execution.tasks.WorkflowSystemTask;
@@ -21,7 +19,6 @@ import com.netflix.conductor.core.listener.TaskStatusListener;
 import com.netflix.conductor.core.listener.TaskStatusListenerStub;
 import com.netflix.conductor.core.listener.WorkflowStatusListener;
 import com.netflix.conductor.core.listener.WorkflowStatusListenerStub;
-import com.netflix.conductor.core.storage.DummyPayloadStorage;
 import com.netflix.conductor.core.sync.Lock;
 import com.netflix.conductor.core.sync.noop.NoopLock;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
@@ -42,7 +39,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.stream.Collectors;
 
-import static com.netflix.conductor.core.events.EventQueues.EVENT_QUEUE_PROVIDERS_QUALIFIER;
 import static com.netflix.conductor.core.execution.tasks.SystemTaskRegistry.ASYNC_SYSTEM_TASKS_QUALIFIER;
 import static java.util.function.Function.identity;
 
@@ -61,15 +57,7 @@ public class ConductorCoreConfiguration {
         return new NoopLock();
     }
 
-    @ConditionalOnProperty(
-            name = "conductor.external-payload-storage.type",
-            havingValue = "dummy",
-            matchIfMissing = true)
-    @Bean
-    public ExternalPayloadStorage dummyExternalPayloadStorage() {
-        LOGGER.info("Initialized dummy payload storage!");
-        return new DummyPayloadStorage();
-    }
+
 
     @ConditionalOnProperty(
             name = "conductor.workflow-status-listener.type",
@@ -114,13 +102,15 @@ public class ConductorCoreConfiguration {
                 .collect(Collectors.toUnmodifiableSet());
     }
 
-    @Bean
-    @Qualifier(EVENT_QUEUE_PROVIDERS_QUALIFIER)
-    public Map<String, EventQueueProvider> getEventQueueProviders(
-            List<EventQueueProvider> eventQueueProviders) {
-        return eventQueueProviders.stream()
-                .collect(Collectors.toMap(EventQueueProvider::getQueueType, identity()));
-    }
+    // FIXME
+
+//    @Bean
+//    @Qualifier(EVENT_QUEUE_PROVIDERS_QUALIFIER)
+//    public Map<String, EventQueueProvider> getEventQueueProviders(
+//            List<EventQueueProvider> eventQueueProviders) {
+//        return eventQueueProviders.stream()
+//                .collect(Collectors.toMap(EventQueueProvider::getQueueType, identity()));
+//    }
 
     @Bean
     public RetryTemplate onTransientErrorRetryTemplate() {

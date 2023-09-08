@@ -18,14 +18,11 @@ import com.netflix.conductor.common.metadata.tasks.TaskDef;
 import com.netflix.conductor.common.metadata.tasks.TaskType;
 import com.netflix.conductor.common.metadata.workflow.WorkflowDef;
 import com.netflix.conductor.common.metadata.workflow.WorkflowTask;
-import com.netflix.conductor.common.utils.ExternalPayloadStorage.Operation;
-import com.netflix.conductor.common.utils.ExternalPayloadStorage.PayloadType;
 import com.netflix.conductor.common.utils.TaskUtils;
 import com.netflix.conductor.core.exception.TerminateWorkflowException;
 import com.netflix.conductor.core.execution.mapper.TaskMapper;
 import com.netflix.conductor.core.execution.mapper.TaskMapperContext;
 import com.netflix.conductor.core.execution.tasks.SystemTaskRegistry;
-import com.netflix.conductor.core.utils.ExternalPayloadStorageUtils;
 import com.netflix.conductor.core.utils.IDGenerator;
 import com.netflix.conductor.core.utils.ParametersUtils;
 import com.netflix.conductor.dao.MetadataDAO;
@@ -60,7 +57,6 @@ public class DeciderService {
 
     private final IDGenerator idGenerator;
     private final ParametersUtils parametersUtils;
-    private final ExternalPayloadStorageUtils externalPayloadStorageUtils;
     private final MetadataDAO metadataDAO;
     private final SystemTaskRegistry systemTaskRegistry;
     private final long taskPendingTimeThresholdMins;
@@ -71,7 +67,6 @@ public class DeciderService {
             IDGenerator idGenerator,
             ParametersUtils parametersUtils,
             MetadataDAO metadataDAO,
-            ExternalPayloadStorageUtils externalPayloadStorageUtils,
             SystemTaskRegistry systemTaskRegistry,
             @Qualifier("taskMappersByTaskType") Map<String, TaskMapper> taskMappers,
             @Value("${conductor.app.taskPendingTimeThreshold:60m}")
@@ -80,7 +75,6 @@ public class DeciderService {
         this.metadataDAO = metadataDAO;
         this.parametersUtils = parametersUtils;
         this.taskMappers = taskMappers;
-        this.externalPayloadStorageUtils = externalPayloadStorageUtils;
         this.taskPendingTimeThresholdMins = taskPendingTimeThreshold.toMinutes();
         this.systemTaskRegistry = systemTaskRegistry;
     }
@@ -367,15 +361,7 @@ public class DeciderService {
                         .findFirst();
         if (optionalTask.isPresent()) {
             TaskModel terminateTask = optionalTask.get();
-            if (StringUtils.isNotBlank(terminateTask.getExternalOutputPayloadStoragePath())) {
-                output =
-                        externalPayloadStorageUtils.downloadPayload(
-                                terminateTask.getExternalOutputPayloadStoragePath());
-                Monitors.recordExternalPayloadStorageUsage(
-                        terminateTask.getTaskDefName(),
-                        Operation.READ.toString(),
-                        PayloadType.TASK_OUTPUT.toString());
-            } else if (!terminateTask.getOutputData().isEmpty()) {
+            if (!terminateTask.getOutputData().isEmpty()) {
                 output = terminateTask.getOutputData();
             }
         } else {
@@ -386,14 +372,6 @@ public class DeciderService {
                 output =
                         parametersUtils.getTaskInput(
                                 workflowDef.getOutputParameters(), workflow, null, null);
-            } else if (StringUtils.isNotBlank(last.getExternalOutputPayloadStoragePath())) {
-                output =
-                        externalPayloadStorageUtils.downloadPayload(
-                                last.getExternalOutputPayloadStoragePath());
-                Monitors.recordExternalPayloadStorageUsage(
-                        last.getTaskDefName(),
-                        Operation.READ.toString(),
-                        PayloadType.TASK_OUTPUT.toString());
             } else {
                 output = last.getOutputData();
             }

@@ -17,7 +17,7 @@ import com.netflix.conductor.common.metadata.tasks.TaskExecLog;
 import com.netflix.conductor.common.run.SearchResult;
 import com.netflix.conductor.common.run.TaskSummary;
 import com.netflix.conductor.common.run.WorkflowSummary;
-import com.netflix.conductor.core.events.queue.Message;
+import com.netflix.conductor.core.events.Message;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;

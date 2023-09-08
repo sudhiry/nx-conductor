@@ -13,10 +13,10 @@
 package com.netflix.conductor.service;
 
 import com.netflix.conductor.common.model.BulkResponse;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 @Validated

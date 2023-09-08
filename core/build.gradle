@@ -4,17 +4,31 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.3'
 }
 
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
 group = 'com.netflix.conductor'
 version = '4.0.0'
 
 dependencies {
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.retry:spring-retry'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation 'org.apache.commons:commons-lang3:3.13.0'
     implementation 'com.spotify:completable-futures:0.3.5'
     implementation 'com.jayway.jsonpath:json-path:2.4.0'
     implementation 'io.reactivex.rxjava3:rxjava:3.1.7'
     implementation 'com.netflix.spectator:spectator-api:1.6.10'
+    implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'
+    implementation 'commons-io:commons-io:2.13.0'
 
     implementation project(':data-types')
 

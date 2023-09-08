@@ -20,13 +20,13 @@ import com.netflix.conductor.common.run.ExternalStorageLocation;
 import com.netflix.conductor.common.run.SearchResult;
 import com.netflix.conductor.common.run.Workflow;
 import com.netflix.conductor.common.run.WorkflowSummary;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.Valid;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
 
@@ -384,15 +384,4 @@ public interface WorkflowService {
     SearchResult<Workflow> searchWorkflowsByTasksV2(
             int start, int size, List<String> sort, String freeText, String query);
 
-    /**
-     * Get the external storage location where the workflow input payload is stored/to be stored
-     *
-     * @param path the path for which the external storage location is to be populated
-     * @param operation the operation to be performed (read or write)
-     * @param payloadType the type of payload (input or output)
-     * @return {@link ExternalStorageLocation} containing the uri and the path to the payload is
-     *     stored in external storage
-     */
-    ExternalStorageLocation getExternalStorageLocation(
-            String path, String operation, String payloadType);
 }

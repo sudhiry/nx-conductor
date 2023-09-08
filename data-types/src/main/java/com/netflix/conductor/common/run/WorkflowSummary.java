@@ -87,10 +87,12 @@ public class WorkflowSummary {
         }
         this.status = workflow.getStatus();
         if (workflow.getInput() != null) {
-            this.input = SummaryUtil.serializeInputOutput(workflow.getInput());
+            // FIXME
+//            this.input = SummaryUtil.serializeInputOutput(workflow.getInput());
         }
         if (workflow.getOutput() != null) {
-            this.output = SummaryUtil.serializeInputOutput(workflow.getOutput());
+            // FIXME
+//            this.output = SummaryUtil.serializeInputOutput(workflow.getOutput());
         }
         this.reasonForIncompletion = workflow.getReasonForIncompletion();
         if (workflow.getEndTime() > 0) {

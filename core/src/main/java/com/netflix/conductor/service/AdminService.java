@@ -13,9 +13,9 @@
 package com.netflix.conductor.service;
 
 import com.netflix.conductor.common.metadata.tasks.Task;
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.Map;
 
@@ -66,5 +66,5 @@ public interface AdminService {
      * @param verbose `true|false` for verbose logs
      * @return map of event queues
      */
-    Map<String, ?> getEventQueues(boolean verbose);
+//    Map<String, ?> getEventQueues(boolean verbose);
 }

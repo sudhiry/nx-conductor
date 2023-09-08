@@ -13,11 +13,10 @@
 package com.netflix.conductor.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.protobuf.Any;
 import com.netflix.conductor.common.metadata.tasks.Task;
 import com.netflix.conductor.common.metadata.tasks.TaskDef;
 import com.netflix.conductor.common.metadata.workflow.WorkflowTask;
+import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 
@@ -26,6 +25,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+@Data
 public class TaskModel {
 
     public enum Status {
@@ -120,9 +120,9 @@ public class TaskModel {
 
     private String domain;
 
-    private Any inputMessage;
+    private Object inputMessage;
 
-    private Any outputMessage;
+    private Object outputMessage;
 
     private int rateLimitPerFrequency;
 
@@ -159,21 +159,6 @@ public class TaskModel {
 
     @JsonIgnore private Map<String, Object> outputData = new HashMap<>();
 
-    public String getTaskType() {
-        return taskType;
-    }
-
-    public void setTaskType(String taskType) {
-        this.taskType = taskType;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
 
     @JsonIgnore
     public Map<String, Object> getInputData() {
@@ -194,203 +179,6 @@ public class TaskModel {
             inputData = new HashMap<>();
         }
         this.inputData = inputData;
-    }
-
-    /**
-     * @deprecated Used only for JSON serialization and deserialization.
-     */
-    @JsonProperty("inputData")
-    @Deprecated
-    public void setRawInputData(Map<String, Object> inputData) {
-        setInputData(inputData);
-    }
-
-    /**
-     * @deprecated Used only for JSON serialization and deserialization.
-     */
-    @JsonProperty("inputData")
-    @Deprecated
-    public Map<String, Object> getRawInputData() {
-        return inputData;
-    }
-
-    public String getReferenceTaskName() {
-        return referenceTaskName;
-    }
-
-    public void setReferenceTaskName(String referenceTaskName) {
-        this.referenceTaskName = referenceTaskName;
-    }
-
-    public int getRetryCount() {
-        return retryCount;
-    }
-
-    public void setRetryCount(int retryCount) {
-        this.retryCount = retryCount;
-    }
-
-    public int getSeq() {
-        return seq;
-    }
-
-    public void setSeq(int seq) {
-        this.seq = seq;
-    }
-
-    public String getCorrelationId() {
-        return correlationId;
-    }
-
-    public void setCorrelationId(String correlationId) {
-        this.correlationId = correlationId;
-    }
-
-    public int getPollCount() {
-        return pollCount;
-    }
-
-    public void setPollCount(int pollCount) {
-        this.pollCount = pollCount;
-    }
-
-    public String getTaskDefName() {
-        if (taskDefName == null || "".equals(taskDefName)) {
-            taskDefName = taskType;
-        }
-        return taskDefName;
-    }
-
-    public void setTaskDefName(String taskDefName) {
-        this.taskDefName = taskDefName;
-    }
-
-    public long getScheduledTime() {
-        return scheduledTime;
-    }
-
-    public void setScheduledTime(long scheduledTime) {
-        this.scheduledTime = scheduledTime;
-    }
-
-    public long getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(long startTime) {
-        this.startTime = startTime;
-    }
-
-    public long getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(long endTime) {
-        this.endTime = endTime;
-    }
-
-    public long getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(long updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public int getStartDelayInSeconds() {
-        return startDelayInSeconds;
-    }
-
-    public void setStartDelayInSeconds(int startDelayInSeconds) {
-        this.startDelayInSeconds = startDelayInSeconds;
-    }
-
-    public String getRetriedTaskId() {
-        return retriedTaskId;
-    }
-
-    public void setRetriedTaskId(String retriedTaskId) {
-        this.retriedTaskId = retriedTaskId;
-    }
-
-    public boolean isRetried() {
-        return retried;
-    }
-
-    public void setRetried(boolean retried) {
-        this.retried = retried;
-    }
-
-    public boolean isExecuted() {
-        return executed;
-    }
-
-    public void setExecuted(boolean executed) {
-        this.executed = executed;
-    }
-
-    public boolean isCallbackFromWorker() {
-        return callbackFromWorker;
-    }
-
-    public void setCallbackFromWorker(boolean callbackFromWorker) {
-        this.callbackFromWorker = callbackFromWorker;
-    }
-
-    public long getResponseTimeoutSeconds() {
-        return responseTimeoutSeconds;
-    }
-
-    public void setResponseTimeoutSeconds(long responseTimeoutSeconds) {
-        this.responseTimeoutSeconds = responseTimeoutSeconds;
-    }
-
-    public String getWorkflowInstanceId() {
-        return workflowInstanceId;
-    }
-
-    public void setWorkflowInstanceId(String workflowInstanceId) {
-        this.workflowInstanceId = workflowInstanceId;
-    }
-
-    public String getWorkflowType() {
-        return workflowType;
-    }
-
-    public void setWorkflowType(String workflowType) {
-        this.workflowType = workflowType;
-    }
-
-    public String getTaskId() {
-        return taskId;
-    }
-
-    public void setTaskId(String taskId) {
-        this.taskId = taskId;
-    }
-
-    public String getReasonForIncompletion() {
-        return reasonForIncompletion;
-    }
-
-    public void setReasonForIncompletion(String reasonForIncompletion) {
-        this.reasonForIncompletion = reasonForIncompletion;
-    }
-
-    public long getCallbackAfterSeconds() {
-        return callbackAfterSeconds;
-    }
-
-    public void setCallbackAfterSeconds(long callbackAfterSeconds) {
-        this.callbackAfterSeconds = callbackAfterSeconds;
-    }
-
-    public String getWorkerId() {
-        return workerId;
-    }
-
-    public void setWorkerId(String workerId) {
-        this.workerId = workerId;
     }
 
     @JsonIgnore
@@ -419,120 +207,6 @@ public class TaskModel {
         this.outputData = outputData;
     }
 
-    /**
-     * @deprecated Used only for JSON serialization and deserialization.
-     */
-    @JsonProperty("outputData")
-    @Deprecated
-    public void setRawOutputData(Map<String, Object> inputData) {
-        setOutputData(inputData);
-    }
-
-    /**
-     * @deprecated Used only for JSON serialization and deserialization.
-     */
-    @JsonProperty("outputData")
-    @Deprecated
-    public Map<String, Object> getRawOutputData() {
-        return outputData;
-    }
-
-    public WorkflowTask getWorkflowTask() {
-        return workflowTask;
-    }
-
-    public void setWorkflowTask(WorkflowTask workflowTask) {
-        this.workflowTask = workflowTask;
-    }
-
-    public String getDomain() {
-        return domain;
-    }
-
-    public void setDomain(String domain) {
-        this.domain = domain;
-    }
-
-    public Any getInputMessage() {
-        return inputMessage;
-    }
-
-    public void setInputMessage(Any inputMessage) {
-        this.inputMessage = inputMessage;
-    }
-
-    public Any getOutputMessage() {
-        return outputMessage;
-    }
-
-    public void setOutputMessage(Any outputMessage) {
-        this.outputMessage = outputMessage;
-    }
-
-    public int getRateLimitPerFrequency() {
-        return rateLimitPerFrequency;
-    }
-
-    public void setRateLimitPerFrequency(int rateLimitPerFrequency) {
-        this.rateLimitPerFrequency = rateLimitPerFrequency;
-    }
-
-    public int getRateLimitFrequencyInSeconds() {
-        return rateLimitFrequencyInSeconds;
-    }
-
-    public void setRateLimitFrequencyInSeconds(int rateLimitFrequencyInSeconds) {
-        this.rateLimitFrequencyInSeconds = rateLimitFrequencyInSeconds;
-    }
-
-    public String getExternalInputPayloadStoragePath() {
-        return externalInputPayloadStoragePath;
-    }
-
-    public void setExternalInputPayloadStoragePath(String externalInputPayloadStoragePath) {
-        this.externalInputPayloadStoragePath = externalInputPayloadStoragePath;
-    }
-
-    public String getExternalOutputPayloadStoragePath() {
-        return externalOutputPayloadStoragePath;
-    }
-
-    public void setExternalOutputPayloadStoragePath(String externalOutputPayloadStoragePath) {
-        this.externalOutputPayloadStoragePath = externalOutputPayloadStoragePath;
-    }
-
-    public int getWorkflowPriority() {
-        return workflowPriority;
-    }
-
-    public void setWorkflowPriority(int workflowPriority) {
-        this.workflowPriority = workflowPriority;
-    }
-
-    public String getExecutionNameSpace() {
-        return executionNameSpace;
-    }
-
-    public void setExecutionNameSpace(String executionNameSpace) {
-        this.executionNameSpace = executionNameSpace;
-    }
-
-    public String getIsolationGroupId() {
-        return isolationGroupId;
-    }
-
-    public void setIsolationGroupId(String isolationGroupId) {
-        this.isolationGroupId = isolationGroupId;
-    }
-
-    public int getIteration() {
-        return iteration;
-    }
-
-    public void setIteration(int iteration) {
-        this.iteration = iteration;
-    }
-
     public String getSubWorkflowId() {
         // For backwards compatibility
         if (StringUtils.isNotBlank(subWorkflowId)) {
@@ -554,14 +228,6 @@ public class TaskModel {
         }
     }
 
-    public boolean isSubworkflowChanged() {
-        return subworkflowChanged;
-    }
-
-    public void setSubworkflowChanged(boolean subworkflowChanged) {
-        this.subworkflowChanged = subworkflowChanged;
-    }
-
     public void incrementPollCount() {
         ++this.pollCount;
     }
@@ -575,14 +241,6 @@ public class TaskModel {
 
     public boolean isLoopOverTask() {
         return iteration > 0;
-    }
-
-    public long getWaitTimeout() {
-        return waitTimeout;
-    }
-
-    public void setWaitTimeout(long waitTimeout) {
-        this.waitTimeout = waitTimeout;
     }
 
     /**
@@ -631,211 +289,6 @@ public class TaskModel {
     public void internalizeOutput(Map<String, Object> data) {
         this.outputData = new HashMap<>();
         this.outputPayload = data;
-    }
-
-    @Override
-    public String toString() {
-        return "TaskModel{"
-                + "taskType='"
-                + taskType
-                + '\''
-                + ", status="
-                + status
-                + ", inputData="
-                + inputData
-                + ", referenceTaskName='"
-                + referenceTaskName
-                + '\''
-                + ", retryCount="
-                + retryCount
-                + ", seq="
-                + seq
-                + ", correlationId='"
-                + correlationId
-                + '\''
-                + ", pollCount="
-                + pollCount
-                + ", taskDefName='"
-                + taskDefName
-                + '\''
-                + ", scheduledTime="
-                + scheduledTime
-                + ", startTime="
-                + startTime
-                + ", endTime="
-                + endTime
-                + ", updateTime="
-                + updateTime
-                + ", startDelayInSeconds="
-                + startDelayInSeconds
-                + ", retriedTaskId='"
-                + retriedTaskId
-                + '\''
-                + ", retried="
-                + retried
-                + ", executed="
-                + executed
-                + ", callbackFromWorker="
-                + callbackFromWorker
-                + ", responseTimeoutSeconds="
-                + responseTimeoutSeconds
-                + ", workflowInstanceId='"
-                + workflowInstanceId
-                + '\''
-                + ", workflowType='"
-                + workflowType
-                + '\''
-                + ", taskId='"
-                + taskId
-                + '\''
-                + ", reasonForIncompletion='"
-                + reasonForIncompletion
-                + '\''
-                + ", callbackAfterSeconds="
-                + callbackAfterSeconds
-                + ", workerId='"
-                + workerId
-                + '\''
-                + ", outputData="
-                + outputData
-                + ", workflowTask="
-                + workflowTask
-                + ", domain='"
-                + domain
-                + '\''
-                + ", waitTimeout='"
-                + waitTimeout
-                + '\''
-                + ", inputMessage="
-                + inputMessage
-                + ", outputMessage="
-                + outputMessage
-                + ", rateLimitPerFrequency="
-                + rateLimitPerFrequency
-                + ", rateLimitFrequencyInSeconds="
-                + rateLimitFrequencyInSeconds
-                + ", externalInputPayloadStoragePath='"
-                + externalInputPayloadStoragePath
-                + '\''
-                + ", externalOutputPayloadStoragePath='"
-                + externalOutputPayloadStoragePath
-                + '\''
-                + ", workflowPriority="
-                + workflowPriority
-                + ", executionNameSpace='"
-                + executionNameSpace
-                + '\''
-                + ", isolationGroupId='"
-                + isolationGroupId
-                + '\''
-                + ", iteration="
-                + iteration
-                + ", subWorkflowId='"
-                + subWorkflowId
-                + '\''
-                + ", subworkflowChanged="
-                + subworkflowChanged
-                + '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TaskModel taskModel = (TaskModel) o;
-        return getRetryCount() == taskModel.getRetryCount()
-                && getSeq() == taskModel.getSeq()
-                && getPollCount() == taskModel.getPollCount()
-                && getScheduledTime() == taskModel.getScheduledTime()
-                && getStartTime() == taskModel.getStartTime()
-                && getEndTime() == taskModel.getEndTime()
-                && getUpdateTime() == taskModel.getUpdateTime()
-                && getStartDelayInSeconds() == taskModel.getStartDelayInSeconds()
-                && isRetried() == taskModel.isRetried()
-                && isExecuted() == taskModel.isExecuted()
-                && isCallbackFromWorker() == taskModel.isCallbackFromWorker()
-                && getResponseTimeoutSeconds() == taskModel.getResponseTimeoutSeconds()
-                && getCallbackAfterSeconds() == taskModel.getCallbackAfterSeconds()
-                && getRateLimitPerFrequency() == taskModel.getRateLimitPerFrequency()
-                && getRateLimitFrequencyInSeconds() == taskModel.getRateLimitFrequencyInSeconds()
-                && getWorkflowPriority() == taskModel.getWorkflowPriority()
-                && getIteration() == taskModel.getIteration()
-                && isSubworkflowChanged() == taskModel.isSubworkflowChanged()
-                && Objects.equals(getTaskType(), taskModel.getTaskType())
-                && getStatus() == taskModel.getStatus()
-                && Objects.equals(getInputData(), taskModel.getInputData())
-                && Objects.equals(getReferenceTaskName(), taskModel.getReferenceTaskName())
-                && Objects.equals(getCorrelationId(), taskModel.getCorrelationId())
-                && Objects.equals(getTaskDefName(), taskModel.getTaskDefName())
-                && Objects.equals(getRetriedTaskId(), taskModel.getRetriedTaskId())
-                && Objects.equals(getWorkflowInstanceId(), taskModel.getWorkflowInstanceId())
-                && Objects.equals(getWorkflowType(), taskModel.getWorkflowType())
-                && Objects.equals(getTaskId(), taskModel.getTaskId())
-                && Objects.equals(getReasonForIncompletion(), taskModel.getReasonForIncompletion())
-                && Objects.equals(getWorkerId(), taskModel.getWorkerId())
-                && Objects.equals(getWaitTimeout(), taskModel.getWaitTimeout())
-                && Objects.equals(outputData, taskModel.outputData)
-                && Objects.equals(outputPayload, taskModel.outputPayload)
-                && Objects.equals(getWorkflowTask(), taskModel.getWorkflowTask())
-                && Objects.equals(getDomain(), taskModel.getDomain())
-                && Objects.equals(getInputMessage(), taskModel.getInputMessage())
-                && Objects.equals(getOutputMessage(), taskModel.getOutputMessage())
-                && Objects.equals(
-                        getExternalInputPayloadStoragePath(),
-                        taskModel.getExternalInputPayloadStoragePath())
-                && Objects.equals(
-                        getExternalOutputPayloadStoragePath(),
-                        taskModel.getExternalOutputPayloadStoragePath())
-                && Objects.equals(getExecutionNameSpace(), taskModel.getExecutionNameSpace())
-                && Objects.equals(getIsolationGroupId(), taskModel.getIsolationGroupId())
-                && Objects.equals(getSubWorkflowId(), taskModel.getSubWorkflowId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(
-                getTaskType(),
-                getStatus(),
-                getInputData(),
-                getReferenceTaskName(),
-                getRetryCount(),
-                getSeq(),
-                getCorrelationId(),
-                getPollCount(),
-                getTaskDefName(),
-                getScheduledTime(),
-                getStartTime(),
-                getEndTime(),
-                getUpdateTime(),
-                getStartDelayInSeconds(),
-                getRetriedTaskId(),
-                isRetried(),
-                isExecuted(),
-                isCallbackFromWorker(),
-                getResponseTimeoutSeconds(),
-                getWorkflowInstanceId(),
-                getWorkflowType(),
-                getTaskId(),
-                getReasonForIncompletion(),
-                getCallbackAfterSeconds(),
-                getWorkerId(),
-                getWaitTimeout(),
-                outputData,
-                outputPayload,
-                getWorkflowTask(),
-                getDomain(),
-                getInputMessage(),
-                getOutputMessage(),
-                getRateLimitPerFrequency(),
-                getRateLimitFrequencyInSeconds(),
-                getExternalInputPayloadStoragePath(),
-                getExternalOutputPayloadStoragePath(),
-                getWorkflowPriority(),
-                getExecutionNameSpace(),
-                getIsolationGroupId(),
-                getIteration(),
-                getSubWorkflowId(),
-                isSubworkflowChanged());
     }
 
     public Task toTask() {

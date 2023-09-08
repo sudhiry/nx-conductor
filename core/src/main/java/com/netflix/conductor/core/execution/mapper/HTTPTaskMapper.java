@@ -71,7 +71,7 @@ public class HTTPTaskMapper implements TaskMapper {
         LOGGER.debug("TaskMapperContext {} in HTTPTaskMapper", taskMapperContext);
 
         WorkflowTask workflowTask = taskMapperContext.getWorkflowTask();
-        workflowTask.getInputParameters().put("asyncComplete", workflowTask.isAsyncComplete());
+        workflowTask.getInputParameters().put("asyncComplete", workflowTask.getAsyncComplete());
         WorkflowModel workflowModel = taskMapperContext.getWorkflowModel();
         String taskId = taskMapperContext.getTaskId();
         int retryCount = taskMapperContext.getRetryCount();

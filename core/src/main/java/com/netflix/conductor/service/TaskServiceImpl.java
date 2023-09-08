@@ -352,17 +352,4 @@ public class TaskServiceImpl implements TaskService {
         return executionService.getSearchTasksV2(query, freeText, start, size, sort);
     }
 
-    /**
-     * Get the external storage location where the task output payload is stored/to be stored
-     *
-     * @param path the path for which the external storage location is to be populated
-     * @param operation the operation to be performed (read or write)
-     * @param type the type of payload (input or output)
-     * @return {@link ExternalStorageLocation} containing the uri and the path to the payload is
-     *     stored in external storage
-     */
-    public ExternalStorageLocation getExternalStorageLocation(
-            String path, String operation, String type) {
-        return executionService.getExternalStorageLocation(path, operation, type);
-    }
 }

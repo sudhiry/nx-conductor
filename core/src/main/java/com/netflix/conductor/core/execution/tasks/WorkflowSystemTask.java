@@ -87,7 +87,7 @@ public abstract class WorkflowSystemTask {
                     .orElse(false);
         } else {
             return Optional.ofNullable(task.getWorkflowTask())
-                    .map(WorkflowTask::isAsyncComplete)
+                    .map(WorkflowTask::getAsyncComplete)
                     .orElse(false);
         }
     }
