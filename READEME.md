@@ -1,4 +1,4 @@
-# NX-Conductor server
+# Conductor server
 
 
 

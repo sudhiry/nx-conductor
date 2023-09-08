@@ -4,6 +4,7 @@ plugins {
 }
 
 rootProject.name = 'nx-conductor'
-include 'core'
-include 'data-types'
+include ('core-ext', 'mongodb-persistence', 'server')
+include 'elasticsearch-persistence'
+include 'rest-api'
 

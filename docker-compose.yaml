@@ -60,3 +60,29 @@ services:
 #      options:
 #        max-size: "1k"
 #        max-file: "3"
+
+#  conductor-server:
+#    container_name: conductor-server
+#    build: ./server
+#    ports:
+#      - "8080:8080"
+#      - "8090:8090"
+#    environment:
+#      conductor.server.cors: unsecure
+#      conductor.db.type: mongo
+#      spring.data.mongodb.uri: "mongodb://root:Password1234@mongo:27017/"
+#      spring.data.mongodb.database: conductor
+#      conductor.elasticsearch.url: http://host.docker.internal:9200
+#    depends_on:
+#      - mongo
+#      - redis
+#
+#  conductor-ui:
+#    container_name: conductor-ui
+#    build: ./ui
+#    ports:
+#      - "8081:80"
+#    environment:
+#      API_HOST: http://conductor-server:8080
+#    depends_on:
+#      - conductor-server
