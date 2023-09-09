@@ -12,8 +12,8 @@
  */
 package com.netflix.conductor.core.execution.mapper;
 
-import com.netflix.conductor.common.metadata.tasks.TaskType;
-import com.netflix.conductor.common.metadata.workflow.WorkflowTask;
+import com.netflix.conductor.schema.metadata.tasks.TaskType;
+import com.netflix.conductor.schema.metadata.workflow.WorkflowTask;
 import com.netflix.conductor.core.execution.tasks.Human;
 import com.netflix.conductor.core.utils.ParametersUtils;
 import com.netflix.conductor.model.TaskModel;
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Map;
 
-import static com.netflix.conductor.common.metadata.tasks.TaskType.TASK_TYPE_HUMAN;
+import static com.netflix.conductor.schema.metadata.tasks.TaskType.TASK_TYPE_HUMAN;
 
 /**
  * An implementation of {@link TaskMapper} to map a {@link WorkflowTask} of type {@link

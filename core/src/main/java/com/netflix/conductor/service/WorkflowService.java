@@ -12,14 +12,13 @@
  */
 package com.netflix.conductor.service;
 
-import com.netflix.conductor.common.metadata.workflow.RerunWorkflowRequest;
-import com.netflix.conductor.common.metadata.workflow.SkipTaskRequest;
-import com.netflix.conductor.common.metadata.workflow.StartWorkflowRequest;
-import com.netflix.conductor.common.metadata.workflow.WorkflowDef;
-import com.netflix.conductor.common.run.ExternalStorageLocation;
-import com.netflix.conductor.common.run.SearchResult;
-import com.netflix.conductor.common.run.Workflow;
-import com.netflix.conductor.common.run.WorkflowSummary;
+import com.netflix.conductor.schema.metadata.workflow.RerunWorkflowRequest;
+import com.netflix.conductor.schema.metadata.workflow.SkipTaskRequest;
+import com.netflix.conductor.schema.metadata.workflow.StartWorkflowRequest;
+import com.netflix.conductor.schema.metadata.workflow.WorkflowDef;
+import com.netflix.conductor.schema.run.SearchResult;
+import com.netflix.conductor.schema.run.Workflow;
+import com.netflix.conductor.schema.run.WorkflowSummary;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

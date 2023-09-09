@@ -12,12 +12,12 @@
  */
 package com.netflix.conductor.core.index;
 
-import com.netflix.conductor.common.metadata.events.EventExecution;
-import com.netflix.conductor.common.metadata.tasks.TaskExecLog;
-import com.netflix.conductor.common.run.SearchResult;
-import com.netflix.conductor.common.run.TaskSummary;
-import com.netflix.conductor.common.run.WorkflowSummary;
-import com.netflix.conductor.core.events.Message;
+import com.netflix.conductor.schema.metadata.events.EventExecution;
+import com.netflix.conductor.schema.metadata.tasks.TaskExecLog;
+import com.netflix.conductor.schema.run.SearchResult;
+import com.netflix.conductor.schema.run.TaskSummary;
+import com.netflix.conductor.schema.run.WorkflowSummary;
+import com.netflix.conductor.core.events.queue.Message;
 import com.netflix.conductor.dao.IndexDAO;
 
 import java.util.Collections;

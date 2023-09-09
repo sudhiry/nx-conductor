@@ -12,7 +12,7 @@
  */
 package com.netflix.conductor.service;
 
-import com.netflix.conductor.common.model.BulkResponse;
+import com.netflix.conductor.schema.metadata.BulkResponse;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import org.springframework.validation.annotation.Validated;

@@ -12,7 +12,7 @@
  */
 package com.netflix.conductor.core.execution.mapper;
 
-import com.netflix.conductor.common.metadata.tasks.TaskType;
+import com.netflix.conductor.schema.metadata.tasks.TaskType;
 import com.netflix.conductor.core.utils.ParametersUtils;
 import com.netflix.conductor.model.TaskModel;
 import com.netflix.conductor.model.WorkflowModel;
@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Map;
 
-import static com.netflix.conductor.common.metadata.tasks.TaskType.TASK_TYPE_TERMINATE;
+import static com.netflix.conductor.schema.metadata.tasks.TaskType.TASK_TYPE_TERMINATE;
 
 @Component
 public class TerminateTaskMapper implements TaskMapper {

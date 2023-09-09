@@ -20,8 +20,8 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.netflix.conductor.common.metadata.tasks.TaskType.TASK_TYPE_TERMINATE;
-import static com.netflix.conductor.common.run.Workflow.WorkflowStatus.*;
+import static com.netflix.conductor.schema.metadata.tasks.TaskType.TASK_TYPE_TERMINATE;
+import static com.netflix.conductor.schema.run.Workflow.WorkflowStatus.*;
 
 /**
  * Task that can terminate a workflow with a given status and modify the workflow's output with a

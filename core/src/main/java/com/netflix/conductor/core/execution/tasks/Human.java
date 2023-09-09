@@ -17,7 +17,7 @@ import com.netflix.conductor.model.TaskModel;
 import com.netflix.conductor.model.WorkflowModel;
 import org.springframework.stereotype.Component;
 
-import static com.netflix.conductor.common.metadata.tasks.TaskType.TASK_TYPE_HUMAN;
+import static com.netflix.conductor.schema.metadata.tasks.TaskType.TASK_TYPE_HUMAN;
 import static com.netflix.conductor.model.TaskModel.Status.IN_PROGRESS;
 
 @Component(TASK_TYPE_HUMAN)

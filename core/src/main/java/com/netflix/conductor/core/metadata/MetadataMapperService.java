@@ -13,11 +13,11 @@
 package com.netflix.conductor.core.metadata;
 
 import com.netflix.conductor.annotations.VisibleForTesting;
-import com.netflix.conductor.common.metadata.tasks.TaskDef;
-import com.netflix.conductor.common.metadata.tasks.TaskType;
-import com.netflix.conductor.common.metadata.workflow.SubWorkflowParams;
-import com.netflix.conductor.common.metadata.workflow.WorkflowDef;
-import com.netflix.conductor.common.metadata.workflow.WorkflowTask;
+import com.netflix.conductor.schema.metadata.tasks.TaskDef;
+import com.netflix.conductor.schema.metadata.tasks.TaskType;
+import com.netflix.conductor.schema.metadata.workflow.SubWorkflowParams;
+import com.netflix.conductor.schema.metadata.workflow.WorkflowDef;
+import com.netflix.conductor.schema.metadata.workflow.WorkflowTask;
 import com.netflix.conductor.core.WorkflowContext;
 import com.netflix.conductor.core.exception.NotFoundException;
 import com.netflix.conductor.core.exception.TerminateWorkflowException;

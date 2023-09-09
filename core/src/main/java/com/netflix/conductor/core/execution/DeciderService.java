@@ -14,11 +14,11 @@ package com.netflix.conductor.core.execution;
 
 import com.netflix.conductor.annotations.Trace;
 import com.netflix.conductor.annotations.VisibleForTesting;
-import com.netflix.conductor.common.metadata.tasks.TaskDef;
-import com.netflix.conductor.common.metadata.tasks.TaskType;
-import com.netflix.conductor.common.metadata.workflow.WorkflowDef;
-import com.netflix.conductor.common.metadata.workflow.WorkflowTask;
-import com.netflix.conductor.common.utils.TaskUtils;
+import com.netflix.conductor.schema.metadata.tasks.TaskDef;
+import com.netflix.conductor.schema.metadata.tasks.TaskType;
+import com.netflix.conductor.schema.metadata.workflow.WorkflowDef;
+import com.netflix.conductor.schema.metadata.workflow.WorkflowTask;
+import com.netflix.conductor.schema.utils.TaskUtils;
 import com.netflix.conductor.core.exception.TerminateWorkflowException;
 import com.netflix.conductor.core.execution.mapper.TaskMapper;
 import com.netflix.conductor.core.execution.mapper.TaskMapperContext;
@@ -40,8 +40,8 @@ import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.netflix.conductor.common.metadata.tasks.TaskType.TERMINATE;
-import static com.netflix.conductor.common.metadata.tasks.TaskType.USER_DEFINED;
+import static com.netflix.conductor.schema.metadata.tasks.TaskType.TERMINATE;
+import static com.netflix.conductor.schema.metadata.tasks.TaskType.USER_DEFINED;
 import static com.netflix.conductor.model.TaskModel.Status.*;
 
 /**

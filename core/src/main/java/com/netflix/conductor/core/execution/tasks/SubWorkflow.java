@@ -13,7 +13,7 @@
 package com.netflix.conductor.core.execution.tasks;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.netflix.conductor.common.metadata.workflow.WorkflowDef;
+import com.netflix.conductor.schema.metadata.workflow.WorkflowDef;
 import com.netflix.conductor.core.exception.NonTransientException;
 import com.netflix.conductor.core.exception.TransientException;
 import com.netflix.conductor.core.execution.StartWorkflowInput;
@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-import static com.netflix.conductor.common.metadata.tasks.TaskType.TASK_TYPE_SUB_WORKFLOW;
+import static com.netflix.conductor.schema.metadata.tasks.TaskType.TASK_TYPE_SUB_WORKFLOW;
 
 @Component(TASK_TYPE_SUB_WORKFLOW)
 public class SubWorkflow extends WorkflowSystemTask {

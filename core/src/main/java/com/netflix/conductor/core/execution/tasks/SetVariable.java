@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.netflix.conductor.common.metadata.tasks.TaskType.TASK_TYPE_SET_VARIABLE;
+import static com.netflix.conductor.schema.metadata.tasks.TaskType.TASK_TYPE_SET_VARIABLE;
 
 @Component(TASK_TYPE_SET_VARIABLE)
 public class SetVariable extends WorkflowSystemTask {

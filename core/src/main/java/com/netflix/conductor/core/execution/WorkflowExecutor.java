@@ -14,13 +14,13 @@ package com.netflix.conductor.core.execution;
 
 import com.netflix.conductor.annotations.Trace;
 import com.netflix.conductor.annotations.VisibleForTesting;
-import com.netflix.conductor.common.metadata.tasks.*;
-import com.netflix.conductor.common.metadata.workflow.RerunWorkflowRequest;
-import com.netflix.conductor.common.metadata.workflow.SkipTaskRequest;
-import com.netflix.conductor.common.metadata.workflow.WorkflowDef;
-import com.netflix.conductor.common.metadata.workflow.WorkflowTask;
-import com.netflix.conductor.common.run.Workflow;
-import com.netflix.conductor.common.utils.TaskUtils;
+import com.netflix.conductor.schema.metadata.tasks.*;
+import com.netflix.conductor.schema.metadata.workflow.RerunWorkflowRequest;
+import com.netflix.conductor.schema.metadata.workflow.SkipTaskRequest;
+import com.netflix.conductor.schema.metadata.workflow.WorkflowDef;
+import com.netflix.conductor.schema.metadata.workflow.WorkflowTask;
+import com.netflix.conductor.schema.run.Workflow;
+import com.netflix.conductor.schema.utils.TaskUtils;
 import com.netflix.conductor.core.WorkflowContext;
 import com.netflix.conductor.core.config.ConductorProperties;
 import com.netflix.conductor.core.dal.ExecutionDAOFacade;
@@ -46,7 +46,6 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.util.*;

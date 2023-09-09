@@ -149,7 +149,7 @@ public class ConductorProperties {
 
     /**
      * The threshold of the workflow input payload size in KB beyond which the payload will be
-     * stored in {@link com.netflix.conductor.common.utils.ExternalPayloadStorage}.
+     * stored in {@link com.netflix.conductor.schema.utils.ExternalPayloadStorage}.
      */
     @DataSizeUnit(DataUnit.KILOBYTES)
     private DataSize workflowInputPayloadSizeThreshold = DataSize.ofKilobytes(5120L);
@@ -163,7 +163,7 @@ public class ConductorProperties {
 
     /**
      * The threshold of the workflow output payload size in KB beyond which the payload will be
-     * stored in {@link com.netflix.conductor.common.utils.ExternalPayloadStorage}.
+     * stored in {@link com.netflix.conductor.schema.utils.ExternalPayloadStorage}.
      */
     @DataSizeUnit(DataUnit.KILOBYTES)
     private DataSize workflowOutputPayloadSizeThreshold = DataSize.ofKilobytes(5120L);
@@ -177,7 +177,7 @@ public class ConductorProperties {
 
     /**
      * The threshold of the task input payload size in KB beyond which the payload will be stored in
-     * {@link com.netflix.conductor.common.utils.ExternalPayloadStorage}.
+     * {@link com.netflix.conductor.schema.utils.ExternalPayloadStorage}.
      */
     @DataSizeUnit(DataUnit.KILOBYTES)
     private DataSize taskInputPayloadSizeThreshold = DataSize.ofKilobytes(3072L);
@@ -191,7 +191,7 @@ public class ConductorProperties {
 
     /**
      * The threshold of the task output payload size in KB beyond which the payload will be stored
-     * in {@link com.netflix.conductor.common.utils.ExternalPayloadStorage}.
+     * in {@link com.netflix.conductor.schema.utils.ExternalPayloadStorage}.
      */
     @DataSizeUnit(DataUnit.KILOBYTES)
     private DataSize taskOutputPayloadSizeThreshold = DataSize.ofKilobytes(3072L);

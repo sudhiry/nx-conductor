@@ -13,12 +13,12 @@
 package com.netflix.conductor.service;
 
 import com.netflix.conductor.annotations.Trace;
-import com.netflix.conductor.common.metadata.events.EventExecution;
-import com.netflix.conductor.common.metadata.tasks.*;
-import com.netflix.conductor.common.run.*;
+import com.netflix.conductor.schema.metadata.events.EventExecution;
+import com.netflix.conductor.schema.metadata.tasks.*;
+import com.netflix.conductor.schema.run.*;
 import com.netflix.conductor.core.config.ConductorProperties;
 import com.netflix.conductor.core.dal.ExecutionDAOFacade;
-import com.netflix.conductor.core.events.Message;
+import com.netflix.conductor.core.events.queue.Message;
 import com.netflix.conductor.core.exception.NotFoundException;
 import com.netflix.conductor.core.execution.WorkflowExecutor;
 import com.netflix.conductor.core.execution.tasks.SystemTaskRegistry;
@@ -27,7 +27,6 @@ import com.netflix.conductor.core.utils.Utils;
 import com.netflix.conductor.dao.QueueDAO;
 import com.netflix.conductor.metrics.Monitors;
 import com.netflix.conductor.model.TaskModel;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

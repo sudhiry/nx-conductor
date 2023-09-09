@@ -14,7 +14,7 @@ package com.netflix.conductor.service;
 
 import com.netflix.conductor.annotations.Audit;
 import com.netflix.conductor.annotations.Trace;
-import com.netflix.conductor.common.model.BulkResponse;
+import com.netflix.conductor.schema.metadata.BulkResponse;
 import com.netflix.conductor.core.execution.WorkflowExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

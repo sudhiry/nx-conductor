@@ -13,16 +13,15 @@
 package com.netflix.conductor.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.netflix.conductor.common.metadata.tasks.Task;
-import com.netflix.conductor.common.metadata.tasks.TaskDef;
-import com.netflix.conductor.common.metadata.workflow.WorkflowTask;
+import com.netflix.conductor.schema.metadata.tasks.Task;
+import com.netflix.conductor.schema.metadata.tasks.TaskDef;
+import com.netflix.conductor.schema.metadata.workflow.WorkflowTask;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 @Data

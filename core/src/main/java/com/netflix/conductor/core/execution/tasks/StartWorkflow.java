@@ -13,7 +13,7 @@
 package com.netflix.conductor.core.execution.tasks;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.netflix.conductor.common.metadata.workflow.StartWorkflowRequest;
+import com.netflix.conductor.schema.metadata.workflow.StartWorkflowRequest;
 import com.netflix.conductor.core.exception.TransientException;
 import com.netflix.conductor.core.execution.StartWorkflowInput;
 import com.netflix.conductor.core.execution.WorkflowExecutor;
@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.netflix.conductor.common.metadata.tasks.TaskType.TASK_TYPE_START_WORKFLOW;
+import static com.netflix.conductor.schema.metadata.tasks.TaskType.TASK_TYPE_START_WORKFLOW;
 import static com.netflix.conductor.model.TaskModel.Status.COMPLETED;
 import static com.netflix.conductor.model.TaskModel.Status.FAILED;
 

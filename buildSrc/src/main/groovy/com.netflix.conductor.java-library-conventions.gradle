@@ -1,4 +1,4 @@
 plugins {
-    id 'com.netflix.conductor.java-common-conventions'
+    id 'com.netflix.conductor.java-conventions'
     id 'java-library'
 }

@@ -12,7 +12,7 @@
  */
 package com.netflix.conductor.core.execution.mapper;
 
-import com.netflix.conductor.common.metadata.tasks.TaskType;
+import com.netflix.conductor.schema.metadata.tasks.TaskType;
 import com.netflix.conductor.core.exception.TerminateWorkflowException;
 import com.netflix.conductor.model.TaskModel;
 import org.slf4j.Logger;

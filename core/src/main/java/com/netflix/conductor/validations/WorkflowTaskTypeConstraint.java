@@ -12,9 +12,9 @@
  */
 package com.netflix.conductor.validations;
 
-import com.netflix.conductor.common.metadata.tasks.TaskDef;
-import com.netflix.conductor.common.metadata.tasks.TaskType;
-import com.netflix.conductor.common.metadata.workflow.WorkflowTask;
+import com.netflix.conductor.schema.metadata.tasks.TaskDef;
+import com.netflix.conductor.schema.metadata.tasks.TaskType;
+import com.netflix.conductor.schema.metadata.workflow.WorkflowTask;
 import com.netflix.conductor.core.utils.DateTimeUtils;
 import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;

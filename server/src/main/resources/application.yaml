@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: nx-conductor
+  data:
+    mongodb:
+      uri: mongodb://root:Password1234@localhost:27017
+      database: conductor
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    enabled: true

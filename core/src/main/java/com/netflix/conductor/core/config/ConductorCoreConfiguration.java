@@ -12,6 +12,8 @@
  */
 package com.netflix.conductor.core.config;
 
+import com.netflix.conductor.core.events.EventQueueProvider;
+import com.netflix.conductor.core.events.queue.ObservableQueue;
 import com.netflix.conductor.core.exception.TransientException;
 import com.netflix.conductor.core.execution.mapper.TaskMapper;
 import com.netflix.conductor.core.execution.tasks.WorkflowSystemTask;
@@ -21,6 +23,7 @@ import com.netflix.conductor.core.listener.WorkflowStatusListener;
 import com.netflix.conductor.core.listener.WorkflowStatusListenerStub;
 import com.netflix.conductor.core.sync.Lock;
 import com.netflix.conductor.core.sync.noop.NoopLock;
+import com.netflix.conductor.model.TaskModel;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +34,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.retry.support.RetryTemplate;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -39,6 +43,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.stream.Collectors;
 
+import static com.netflix.conductor.core.events.EventQueues.EVENT_QUEUE_PROVIDERS_QUALIFIER;
 import static com.netflix.conductor.core.execution.tasks.SystemTaskRegistry.ASYNC_SYSTEM_TASKS_QUALIFIER;
 import static java.util.function.Function.identity;
 
@@ -102,15 +107,13 @@ public class ConductorCoreConfiguration {
                 .collect(Collectors.toUnmodifiableSet());
     }
 
-    // FIXME
-
-//    @Bean
-//    @Qualifier(EVENT_QUEUE_PROVIDERS_QUALIFIER)
-//    public Map<String, EventQueueProvider> getEventQueueProviders(
-//            List<EventQueueProvider> eventQueueProviders) {
-//        return eventQueueProviders.stream()
-//                .collect(Collectors.toMap(EventQueueProvider::getQueueType, identity()));
-//    }
+    @Bean
+    @Qualifier(EVENT_QUEUE_PROVIDERS_QUALIFIER)
+    public Map<String, EventQueueProvider> getEventQueueProviders(
+            List<EventQueueProvider> eventQueueProviders) {
+        return eventQueueProviders.stream()
+                .collect(Collectors.toMap(EventQueueProvider::getQueueType, identity()));
+    }
 
     @Bean
     public RetryTemplate onTransientErrorRetryTemplate() {
@@ -119,5 +122,11 @@ public class ConductorCoreConfiguration {
                 .maxAttempts(3)
                 .noBackoff()
                 .build();
+    }
+
+    // FIXME
+    @Bean
+    public Map<TaskModel.Status, ObservableQueue> getQueues() {
+        return new HashMap<>();
     }
 }

@@ -13,7 +13,7 @@
 package com.netflix.conductor.core.reconciliation;
 
 import com.netflix.conductor.annotations.VisibleForTesting;
-import com.netflix.conductor.common.metadata.tasks.TaskType;
+import com.netflix.conductor.schema.metadata.tasks.TaskType;
 import com.netflix.conductor.core.config.ConductorProperties;
 import com.netflix.conductor.core.exception.NotFoundException;
 import com.netflix.conductor.core.execution.tasks.SystemTaskRegistry;

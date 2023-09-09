@@ -14,9 +14,8 @@ package com.netflix.conductor.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.netflix.conductor.common.metadata.workflow.WorkflowDef;
-import com.netflix.conductor.common.run.Workflow;
+import com.netflix.conductor.schema.metadata.workflow.WorkflowDef;
+import com.netflix.conductor.schema.run.Workflow;
 import com.netflix.conductor.core.utils.Utils;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;

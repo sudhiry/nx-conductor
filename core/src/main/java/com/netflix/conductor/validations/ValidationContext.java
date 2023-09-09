@@ -17,7 +17,7 @@ import com.netflix.conductor.dao.MetadataDAO;
 /**
  * This context is defined to get access to {@link MetadataDAO} inside {@link
  * WorkflowTaskTypeConstraint} constraint validator to validate {@link
- * com.netflix.conductor.common.metadata.workflow.WorkflowTask}.
+ * com.netflix.conductor.schema.metadata.workflow.WorkflowTask}.
  */
 public class ValidationContext {
 

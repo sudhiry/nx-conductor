@@ -12,7 +12,7 @@
  */
 package com.netflix.conductor.core.utils;
 
-import com.netflix.conductor.common.metadata.tasks.Task;
+import com.netflix.conductor.schema.metadata.tasks.Task;
 import com.netflix.conductor.model.TaskModel;
 import org.apache.commons.lang3.StringUtils;
 

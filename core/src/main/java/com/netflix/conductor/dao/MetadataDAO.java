@@ -12,8 +12,8 @@
  */
 package com.netflix.conductor.dao;
 
-import com.netflix.conductor.common.metadata.tasks.TaskDef;
-import com.netflix.conductor.common.metadata.workflow.WorkflowDef;
+import com.netflix.conductor.schema.metadata.tasks.TaskDef;
+import com.netflix.conductor.schema.metadata.workflow.WorkflowDef;
 
 import java.util.List;
 import java.util.Optional;

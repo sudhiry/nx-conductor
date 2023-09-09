@@ -12,7 +12,7 @@
  */
 package com.netflix.conductor.core.execution.tasks;
 
-import com.netflix.conductor.common.utils.TaskUtils;
+import com.netflix.conductor.schema.utils.TaskUtils;
 import com.netflix.conductor.core.execution.WorkflowExecutor;
 import com.netflix.conductor.model.TaskModel;
 import com.netflix.conductor.model.WorkflowModel;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.netflix.conductor.common.metadata.tasks.TaskType.TASK_TYPE_JOIN;
+import static com.netflix.conductor.schema.metadata.tasks.TaskType.TASK_TYPE_JOIN;
 
 @Component(TASK_TYPE_JOIN)
 public class Join extends WorkflowSystemTask {

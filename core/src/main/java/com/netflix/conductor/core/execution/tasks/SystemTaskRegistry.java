@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 /**
  * A container class that holds a mapping of system task types {@link
- * com.netflix.conductor.common.metadata.tasks.TaskType} to {@link WorkflowSystemTask} instances.
+ * com.netflix.conductor.schema.metadata.tasks.TaskType} to {@link WorkflowSystemTask} instances.
  */
 @Component
 public class SystemTaskRegistry {

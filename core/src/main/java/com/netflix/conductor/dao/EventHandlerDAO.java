@@ -12,7 +12,7 @@
  */
 package com.netflix.conductor.dao;
 
-import com.netflix.conductor.common.metadata.events.EventHandler;
+import com.netflix.conductor.schema.metadata.events.EventHandler;
 
 import java.util.List;
 

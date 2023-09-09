@@ -12,7 +12,7 @@
  */
 package com.netflix.conductor.core.execution.tasks;
 
-import com.netflix.conductor.common.metadata.workflow.WorkflowTask;
+import com.netflix.conductor.schema.metadata.workflow.WorkflowTask;
 import com.netflix.conductor.core.execution.WorkflowExecutor;
 import com.netflix.conductor.model.TaskModel;
 import com.netflix.conductor.model.WorkflowModel;

@@ -12,7 +12,7 @@
  */
 package com.netflix.conductor.core.execution.mapper;
 
-import com.netflix.conductor.common.metadata.workflow.WorkflowTask;
+import com.netflix.conductor.schema.metadata.workflow.WorkflowTask;
 import com.netflix.conductor.core.exception.TerminateWorkflowException;
 import com.netflix.conductor.model.TaskModel;
 import org.slf4j.Logger;
@@ -21,8 +21,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.netflix.conductor.common.metadata.tasks.TaskType.START_WORKFLOW;
-import static com.netflix.conductor.common.metadata.tasks.TaskType.TASK_TYPE_START_WORKFLOW;
+import static com.netflix.conductor.schema.metadata.tasks.TaskType.START_WORKFLOW;
+import static com.netflix.conductor.schema.metadata.tasks.TaskType.TASK_TYPE_START_WORKFLOW;
 
 @Component
 public class StartWorkflowTaskMapper implements TaskMapper {

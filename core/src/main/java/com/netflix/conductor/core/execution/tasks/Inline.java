@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-import static com.netflix.conductor.common.metadata.tasks.TaskType.TASK_TYPE_INLINE;
+import static com.netflix.conductor.schema.metadata.tasks.TaskType.TASK_TYPE_INLINE;
 
 /**
  * @author X-Ultra

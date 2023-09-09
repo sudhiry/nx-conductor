@@ -12,7 +12,7 @@
  */
 package com.netflix.conductor.service;
 
-import com.netflix.conductor.common.metadata.tasks.Task;
+import com.netflix.conductor.schema.metadata.tasks.Task;
 import jakarta.validation.constraints.NotEmpty;
 import org.springframework.validation.annotation.Validated;
 

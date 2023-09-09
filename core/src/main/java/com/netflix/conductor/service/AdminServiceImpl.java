@@ -2,7 +2,7 @@ package com.netflix.conductor.service;
 
 import com.netflix.conductor.annotations.Audit;
 import com.netflix.conductor.annotations.Trace;
-import com.netflix.conductor.common.metadata.tasks.Task;
+import com.netflix.conductor.schema.metadata.tasks.Task;
 import com.netflix.conductor.core.config.ConductorProperties;
 import com.netflix.conductor.core.reconciliation.WorkflowRepairService;
 import com.netflix.conductor.core.utils.Utils;

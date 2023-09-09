@@ -5,5 +5,9 @@ plugins {
 
 rootProject.name = 'nx-conductor'
 include 'core'
-include 'data-types'
+include 'schema'
+include 'api'
+include 'persistence'
+include 'server'
+include 'search'
 

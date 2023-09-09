@@ -12,12 +12,12 @@
  */
 package com.netflix.conductor.service;
 
-import com.netflix.conductor.common.constraints.OwnerEmailMandatoryConstraint;
-import com.netflix.conductor.common.metadata.events.EventHandler;
-import com.netflix.conductor.common.metadata.tasks.TaskDef;
-import com.netflix.conductor.common.metadata.workflow.WorkflowDef;
-import com.netflix.conductor.common.metadata.workflow.WorkflowDefSummary;
-import com.netflix.conductor.common.model.BulkResponse;
+import com.netflix.conductor.schema.constraints.OwnerEmailMandatoryConstraint;
+import com.netflix.conductor.schema.metadata.events.EventHandler;
+import com.netflix.conductor.schema.metadata.tasks.TaskDef;
+import com.netflix.conductor.schema.metadata.workflow.WorkflowDef;
+import com.netflix.conductor.schema.metadata.workflow.WorkflowDefSummary;
+import com.netflix.conductor.schema.metadata.BulkResponse;
 import com.netflix.conductor.core.WorkflowContext;
 import com.netflix.conductor.core.config.ConductorProperties;
 import com.netflix.conductor.core.exception.NotFoundException;

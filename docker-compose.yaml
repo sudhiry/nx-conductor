@@ -32,31 +32,7 @@ services:
     image: redis:6.2.13-alpine
     ports:
       - "6379:6379"
-#    volumes:
-#      - ./volumes/redis:/data
+    volumes:
+      - ./volumes/redis:/data
     healthcheck:
       test: [ "CMD", "redis-cli","ping" ]
-
-#  elasticsearch:
-#    image: elasticsearch:7.17.10
-#    container_name: conductor-elasticsearch
-#    environment:
-#      - "ES_JAVA_OPTS=-Xms512m -Xmx1024m"
-#      - transport.host=0.0.0.0
-#      - discovery.type=single-node
-#      - xpack.security.enabled=false
-#    volumes:
-#      - ./volumes/elasticsearch:/usr/share/elasticsearch/data
-#    ports:
-#      - "9200:9200"
-#      - "9300:9300"
-#    healthcheck:
-#      test: wget http://localhost:9200/ -O /dev/null
-#      interval: 5s
-#      timeout: 5s
-#      retries: 12
-#    logging:
-#      driver: "json-file"
-#      options:
-#        max-size: "1k"
-#        max-file: "3"

@@ -13,9 +13,9 @@
 package com.netflix.conductor.core.execution.tasks;
 
 import com.netflix.conductor.annotations.VisibleForTesting;
-import com.netflix.conductor.common.metadata.tasks.TaskDef;
-import com.netflix.conductor.common.metadata.workflow.WorkflowTask;
-import com.netflix.conductor.common.utils.TaskUtils;
+import com.netflix.conductor.schema.metadata.tasks.TaskDef;
+import com.netflix.conductor.schema.metadata.workflow.WorkflowTask;
+import com.netflix.conductor.schema.utils.TaskUtils;
 import com.netflix.conductor.core.execution.WorkflowExecutor;
 import com.netflix.conductor.core.execution.evaluators.ScriptEvaluator;
 import com.netflix.conductor.core.utils.ParametersUtils;
@@ -29,7 +29,7 @@ import javax.script.ScriptException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.netflix.conductor.common.metadata.tasks.TaskType.TASK_TYPE_DO_WHILE;
+import static com.netflix.conductor.schema.metadata.tasks.TaskType.TASK_TYPE_DO_WHILE;
 
 @Component(TASK_TYPE_DO_WHILE)
 public class DoWhile extends WorkflowSystemTask {

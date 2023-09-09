@@ -12,7 +12,7 @@
  */
 package com.netflix.conductor.dao;
 
-import com.netflix.conductor.common.metadata.tasks.PollData;
+import com.netflix.conductor.schema.metadata.tasks.PollData;
 
 import java.util.List;
 

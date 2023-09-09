@@ -12,7 +12,7 @@
  */
 package com.netflix.conductor.dao;
 
-import com.netflix.conductor.common.metadata.tasks.TaskDef;
+import com.netflix.conductor.schema.metadata.tasks.TaskDef;
 import com.netflix.conductor.model.TaskModel;
 
 /**

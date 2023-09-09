@@ -13,7 +13,7 @@
 package com.netflix.conductor.core.execution.tasks;
 
 import com.netflix.conductor.annotations.VisibleForTesting;
-import com.netflix.conductor.common.metadata.tasks.TaskDef;
+import com.netflix.conductor.schema.metadata.tasks.TaskDef;
 import com.netflix.conductor.core.utils.QueueUtils;
 import com.netflix.conductor.service.MetadataService;
 import org.apache.commons.lang3.StringUtils;

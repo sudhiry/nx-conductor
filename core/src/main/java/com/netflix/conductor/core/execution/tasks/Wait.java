@@ -23,7 +23,7 @@ import java.time.Duration;
 import java.util.Date;
 import java.util.Optional;
 
-import static com.netflix.conductor.common.metadata.tasks.TaskType.TASK_TYPE_WAIT;
+import static com.netflix.conductor.schema.metadata.tasks.TaskType.TASK_TYPE_WAIT;
 import static com.netflix.conductor.core.utils.DateTimeUtils.parseDate;
 import static com.netflix.conductor.core.utils.DateTimeUtils.parseDuration;
 import static com.netflix.conductor.model.TaskModel.Status.*;

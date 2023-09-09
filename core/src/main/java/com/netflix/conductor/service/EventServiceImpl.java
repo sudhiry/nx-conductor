@@ -12,7 +12,7 @@
  */
 package com.netflix.conductor.service;
 
-import com.netflix.conductor.common.metadata.events.EventHandler;
+import com.netflix.conductor.schema.metadata.events.EventHandler;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
