@@ -11,3 +11,7 @@ springdoc:
     path: /api-docs
   swagger-ui:
     enabled: true
+
+server:
+  http2:
+    enabled: true

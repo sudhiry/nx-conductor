@@ -2,6 +2,7 @@ package com.netflix.conductor.service;
 
 import com.netflix.conductor.annotations.Audit;
 import com.netflix.conductor.annotations.Trace;
+import com.netflix.conductor.core.events.EventQueueManager;
 import com.netflix.conductor.schema.metadata.tasks.Task;
 import com.netflix.conductor.core.config.ConductorProperties;
 import com.netflix.conductor.core.reconciliation.WorkflowRepairService;
@@ -22,17 +23,20 @@ public class AdminServiceImpl implements AdminService {
     private final QueueDAO queueDAO;
     private final WorkflowRepairService workflowRepairService;
     private final BuildProperties buildProperties;
+    private final EventQueueManager eventQueueManager;
 
     public AdminServiceImpl(
             ConductorProperties properties,
             ExecutionService executionService,
             QueueDAO queueDAO,
             Optional<WorkflowRepairService> workflowRepairService,
+            Optional<EventQueueManager> eventQueueManager,
             Optional<BuildProperties> buildProperties) {
         this.properties = properties;
         this.executionService = executionService;
         this.queueDAO = queueDAO;
         this.workflowRepairService = workflowRepairService.orElse(null);
+        this.eventQueueManager = eventQueueManager.orElse(null);
         this.buildProperties = buildProperties.orElse(null);
     }
 
@@ -108,10 +112,10 @@ public class AdminServiceImpl implements AdminService {
      * @param verbose `true|false` for verbose logs
      * @return map of event queues
      */
-//    public Map<String, ?> getEventQueues(boolean verbose) {
-//        if (eventQueueManager == null) {
-//            throw new IllegalStateException("Event processing is DISABLED");
-//        }
-//        return (verbose ? eventQueueManager.getQueueSizes() : eventQueueManager.getQueues());
-//    }
+    public Map<String, ?> getEventQueues(boolean verbose) {
+        if (eventQueueManager == null) {
+            throw new IllegalStateException("Event processing is DISABLED");
+        }
+        return (verbose ? eventQueueManager.getQueueSizes() : eventQueueManager.getQueues());
+    }
 }

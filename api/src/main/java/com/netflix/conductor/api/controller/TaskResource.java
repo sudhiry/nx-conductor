@@ -94,13 +94,13 @@ public class TaskResource {
                 .orElse(ResponseEntity.noContent().build());
     }
 
-    @GetMapping("/queue/sizes")
-    @Operation(summary = "Deprecated. Please use /tasks/queue/size endpoint")
-    @Deprecated
-    public Map<String, Integer> size(
-            @RequestParam(value = "taskType", required = false) List<String> taskTypes) {
-        return taskService.getTaskQueueSizes(taskTypes);
-    }
+//    @GetMapping("/queue/sizes")
+//    @Operation(summary = "Deprecated. Please use /tasks/queue/size endpoint")
+//    @Deprecated
+//    public Map<String, Integer> size(
+//            @RequestParam(value = "taskType", required = false) List<String> taskTypes) {
+//        return taskService.getTaskQueueSizes(taskTypes);
+//    }
 
     @GetMapping("/queue/size")
     @Operation(summary = "Get queue size for a task type.")

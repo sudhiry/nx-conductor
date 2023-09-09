@@ -66,5 +66,5 @@ public interface AdminService {
      * @param verbose `true|false` for verbose logs
      * @return map of event queues
      */
-//    Map<String, ?> getEventQueues(boolean verbose);
+    Map<String, ?> getEventQueues(boolean verbose);
 }
