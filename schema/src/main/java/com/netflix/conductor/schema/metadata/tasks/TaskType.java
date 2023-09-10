@@ -32,12 +32,9 @@ public enum TaskType {
     HUMAN,
     USER_DEFINED,
     HTTP,
-    LAMBDA,
     INLINE,
     EXCLUSIVE_JOIN,
     TERMINATE,
-    KAFKA_PUBLISH,
-    JSON_JQ_TRANSFORM,
     SET_VARIABLE;
 
     /**
@@ -59,12 +56,9 @@ public enum TaskType {
     public static final String TASK_TYPE_FORK_JOIN = "FORK_JOIN";
     public static final String TASK_TYPE_SIMPLE = "SIMPLE";
     public static final String TASK_TYPE_HTTP = "HTTP";
-    public static final String TASK_TYPE_LAMBDA = "LAMBDA";
     public static final String TASK_TYPE_INLINE = "INLINE";
     public static final String TASK_TYPE_EXCLUSIVE_JOIN = "EXCLUSIVE_JOIN";
     public static final String TASK_TYPE_TERMINATE = "TERMINATE";
-    public static final String TASK_TYPE_KAFKA_PUBLISH = "KAFKA_PUBLISH";
-    public static final String TASK_TYPE_JSON_JQ_TRANSFORM = "JSON_JQ_TRANSFORM";
     public static final String TASK_TYPE_SET_VARIABLE = "SET_VARIABLE";
     public static final String TASK_TYPE_FORK = "FORK";
 

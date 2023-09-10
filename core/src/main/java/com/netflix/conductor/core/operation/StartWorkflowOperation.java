@@ -85,8 +85,6 @@ public class StartWorkflowOperation implements WorkflowOperation<StartWorkflowIn
 
         // perform validations
         Map<String, Object> workflowInput = input.getWorkflowInput();
-        String externalInputPayloadStoragePath = input.getExternalInputPayloadStoragePath();
-        validateWorkflow(workflowDefinition, workflowInput, externalInputPayloadStoragePath);
 
         // Generate ID if it's not present
         String workflowId =
@@ -108,7 +106,6 @@ public class StartWorkflowOperation implements WorkflowOperation<StartWorkflowIn
         workflow.setEvent(input.getEvent());
         workflow.setTaskToDomain(input.getTaskToDomain());
         workflow.setVariables(workflowDefinition.getVariables());
-
         Map<String, Object> parsedInput =
                 parametersUtils.getWorkflowInput(workflowDefinition, workflowInput);
         workflow.setInput(parsedInput);

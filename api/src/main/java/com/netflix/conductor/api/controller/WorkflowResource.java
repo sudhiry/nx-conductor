@@ -42,6 +42,7 @@ public class WorkflowResource {
         this.workflowService = workflowService;
     }
 
+    @PostMapping(produces = TEXT_PLAIN_VALUE)
     @Operation(
             summary =
                     "Start a new workflow with StartWorkflowRequest, which allows task to be executed in a domain")

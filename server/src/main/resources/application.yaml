@@ -1,3 +1,4 @@
+
 spring:
   application:
     name: nx-conductor
@@ -15,3 +16,21 @@ springdoc:
 server:
   http2:
     enabled: true
+
+conductor:
+  indexing:
+    enabled: false
+  server:
+    cors: unsecure
+
+#  elasticsearch:
+#    url: https://test-nx-conductor.ent.eu-west-1.aws.found.io
+##    cluster-health-color: yellow
+#    username: private-key
+#    password: private-12cecgwzwmq5g6harj1bqqfi
+
+#  lock:
+#    server-type: SINGLE
+logging:
+  level:
+    root: info

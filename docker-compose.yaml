@@ -57,4 +57,14 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LOG_DIRS: /tmp/kraft-combined-logs
-      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+      CLUSTER_ID: some_cluster_id
+
+#  rest-proxy:
+#    image: confluentinc/cp-kafka-rest:7.5.0
+#    container_name: conductor-kafka-rest
+#    ports:
+#      - "8082:8082"
+#    environment:
+#      KAFKA_REST_HOST_NAME: kafka-rest-proxy
+#      KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
+#      KAFKA_REST_BOOTSTRAP_SERVERS: broker:9092

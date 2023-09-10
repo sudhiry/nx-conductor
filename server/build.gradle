@@ -21,7 +21,8 @@ dependencies {
     implementation project(':schema')
     implementation project(':core')
     implementation project(':persistence')
-    implementation project(':search')
+//    implementation project(':search')
+    implementation project(':lock')
     implementation project(':api')
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
