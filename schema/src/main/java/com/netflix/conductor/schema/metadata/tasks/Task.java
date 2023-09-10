@@ -13,6 +13,7 @@
 package com.netflix.conductor.schema.metadata.tasks;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.netflix.conductor.schema.metadata.workflow.WorkflowTask;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
@@ -68,6 +69,7 @@ public class Task {
 
     private Status status;
 
+    @JsonProperty("inputData")
     private Map<String, Object> inputData = new HashMap<>();
 
     private String referenceTaskName;
@@ -118,15 +120,12 @@ public class Task {
 
     private String workerId;
 
+    @JsonProperty("outputData")
     private Map<String, Object> outputData = new HashMap<>();
 
     private WorkflowTask workflowTask;
 
     private String domain;
-
-    private Object inputMessage;
-
-    private Object outputMessage;
 
     private int rateLimitPerFrequency;
 
@@ -234,8 +233,6 @@ public class Task {
         copy.setTaskId(taskId);
         copy.setWorkflowTask(workflowTask);
         copy.setDomain(domain);
-        copy.setInputMessage(inputMessage);
-        copy.setOutputMessage(outputMessage);
         copy.setRateLimitPerFrequency(rateLimitPerFrequency);
         copy.setRateLimitFrequencyInSeconds(rateLimitFrequencyInSeconds);
         copy.setExternalInputPayloadStoragePath(externalInputPayloadStoragePath);
@@ -271,105 +268,6 @@ public class Task {
         return deepCopy;
     }
 
-    @Override
-    public String toString() {
-        return "Task{"
-                + "taskType='"
-                + taskType
-                + '\''
-                + ", status="
-                + status
-                + ", inputData="
-                + inputData
-                + ", referenceTaskName='"
-                + referenceTaskName
-                + '\''
-                + ", retryCount="
-                + retryCount
-                + ", seq="
-                + seq
-                + ", correlationId='"
-                + correlationId
-                + '\''
-                + ", pollCount="
-                + pollCount
-                + ", taskDefName='"
-                + taskDefName
-                + '\''
-                + ", scheduledTime="
-                + scheduledTime
-                + ", startTime="
-                + startTime
-                + ", endTime="
-                + endTime
-                + ", updateTime="
-                + updateTime
-                + ", startDelayInSeconds="
-                + startDelayInSeconds
-                + ", retriedTaskId='"
-                + retriedTaskId
-                + '\''
-                + ", retried="
-                + retried
-                + ", executed="
-                + executed
-                + ", callbackFromWorker="
-                + callbackFromWorker
-                + ", responseTimeoutSeconds="
-                + responseTimeoutSeconds
-                + ", workflowInstanceId='"
-                + workflowInstanceId
-                + '\''
-                + ", workflowType='"
-                + workflowType
-                + '\''
-                + ", taskId='"
-                + taskId
-                + '\''
-                + ", reasonForIncompletion='"
-                + reasonForIncompletion
-                + '\''
-                + ", callbackAfterSeconds="
-                + callbackAfterSeconds
-                + ", workerId='"
-                + workerId
-                + '\''
-                + ", outputData="
-                + outputData
-                + ", workflowTask="
-                + workflowTask
-                + ", domain='"
-                + domain
-                + '\''
-                + ", inputMessage='"
-                + inputMessage
-                + '\''
-                + ", outputMessage='"
-                + outputMessage
-                + '\''
-                + ", rateLimitPerFrequency="
-                + rateLimitPerFrequency
-                + ", rateLimitFrequencyInSeconds="
-                + rateLimitFrequencyInSeconds
-                + ", workflowPriority="
-                + workflowPriority
-                + ", externalInputPayloadStoragePath='"
-                + externalInputPayloadStoragePath
-                + '\''
-                + ", externalOutputPayloadStoragePath='"
-                + externalOutputPayloadStoragePath
-                + '\''
-                + ", isolationGroupId='"
-                + isolationGroupId
-                + '\''
-                + ", executionNameSpace='"
-                + executionNameSpace
-                + '\''
-                + ", subworkflowChanged='"
-                + subworkflowChanged
-                + '\''
-                + '}';
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -412,8 +310,6 @@ public class Task {
                 && Objects.equals(getOutputData(), task.getOutputData())
                 && Objects.equals(getWorkflowTask(), task.getWorkflowTask())
                 && Objects.equals(getDomain(), task.getDomain())
-                && Objects.equals(getInputMessage(), task.getInputMessage())
-                && Objects.equals(getOutputMessage(), task.getOutputMessage())
                 && Objects.equals(
                         getExternalInputPayloadStoragePath(),
                         task.getExternalInputPayloadStoragePath())
@@ -456,8 +352,6 @@ public class Task {
                 getOutputData(),
                 getWorkflowTask(),
                 getDomain(),
-                getInputMessage(),
-                getOutputMessage(),
                 getRateLimitPerFrequency(),
                 getRateLimitFrequencyInSeconds(),
                 getExternalInputPayloadStoragePath(),

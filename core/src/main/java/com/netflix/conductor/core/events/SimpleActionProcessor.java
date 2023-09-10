@@ -160,7 +160,6 @@ public class SimpleActionProcessor implements ActionProcessor {
 
         taskModel.setStatus(status);
         taskModel.setOutputData(replaced);
-        taskModel.setOutputMessage(taskDetails.getOutputMessage());
         taskModel.addOutput("conductor.event.messageId", messageId);
         taskModel.addOutput("conductor.event.name", event);
 

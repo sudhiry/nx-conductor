@@ -12,6 +12,8 @@
  */
 package com.netflix.conductor.core.operation;
 
+import com.netflix.conductor.core.event.WorkflowCreationEvent;
+import com.netflix.conductor.core.event.WorkflowEvaluationEvent;
 import com.netflix.conductor.schema.metadata.workflow.WorkflowDef;
 import com.netflix.conductor.core.WorkflowContext;
 import com.netflix.conductor.core.dal.ExecutionDAOFacade;
@@ -27,6 +29,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -64,11 +67,11 @@ public class StartWorkflowOperation implements WorkflowOperation<StartWorkflowIn
         return startWorkflow(input);
     }
 
-    // FIXME
-//    @EventListener(WorkflowCreationEvent.class)
-//    public void handleWorkflowCreationEvent(WorkflowCreationEvent workflowCreationEvent) {
-//        startWorkflow(workflowCreationEvent.getStartWorkflowInput());
-//    }
+
+    @EventListener(WorkflowCreationEvent.class)
+    public void handleWorkflowCreationEvent(WorkflowCreationEvent workflowCreationEvent) {
+        startWorkflow(workflowCreationEvent.getStartWorkflowInput());
+    }
 
     private String startWorkflow(StartWorkflowInput input) {
         WorkflowDef workflowDefinition;
@@ -147,11 +150,7 @@ public class StartWorkflowOperation implements WorkflowOperation<StartWorkflowIn
                     "A new instance of workflow: {} created with id: {}",
                     workflow.getWorkflowName(),
                     workflow.getWorkflowId());
-            // FIXME
-//            executionDAOFacade.populateWorkflowAndTaskPayloadData(workflow);
-
-            // FIXME
-            // eventPublisher.publishEvent(new WorkflowEvaluationEvent(workflow));
+             eventPublisher.publishEvent(new WorkflowEvaluationEvent(workflow));
         } finally {
             executionLockService.releaseLock(workflow.getWorkflowId());
         }

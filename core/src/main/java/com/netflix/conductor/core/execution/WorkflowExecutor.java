@@ -14,6 +14,8 @@ package com.netflix.conductor.core.execution;
 
 import com.netflix.conductor.annotations.Trace;
 import com.netflix.conductor.annotations.VisibleForTesting;
+import com.netflix.conductor.core.event.WorkflowCreationEvent;
+import com.netflix.conductor.core.event.WorkflowEvaluationEvent;
 import com.netflix.conductor.schema.metadata.tasks.*;
 import com.netflix.conductor.schema.metadata.workflow.RerunWorkflowRequest;
 import com.netflix.conductor.schema.metadata.workflow.SkipTaskRequest;
@@ -46,6 +48,7 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -662,8 +665,7 @@ public class WorkflowExecutor {
                     startWorkflowInput.setWorkflowId(failureWFId);
                     startWorkflowInput.setTriggeringWorkflowId(workflowId);
 
-                    // FIXME
-//                    eventPublisher.publishEvent(new WorkflowCreationEvent(startWorkflowInput));
+                    eventPublisher.publishEvent(new WorkflowCreationEvent(startWorkflowInput));
 
                     workflow.addOutput("conductor.failure_workflow", failureWFId);
                 } catch (Exception e) {
@@ -763,17 +765,11 @@ public class WorkflowExecutor {
         } else {
             task.setStatus(TaskModel.Status.valueOf(taskResult.getStatus().name()));
         }
-        task.setOutputMessage(taskResult.getOutputMessage());
         task.setReasonForIncompletion(taskResult.getReasonForIncompletion());
         task.setWorkerId(taskResult.getWorkerId());
         task.setCallbackAfterSeconds(taskResult.getCallbackAfterSeconds());
         task.setOutputData(taskResult.getOutputData());
         task.setSubWorkflowId(taskResult.getSubWorkflowId());
-
-        if (StringUtils.isNotBlank(taskResult.getExternalOutputPayloadStoragePath())) {
-            task.setExternalOutputPayloadStoragePath(
-                    taskResult.getExternalOutputPayloadStoragePath());
-        }
 
         if (task.getStatus().isTerminal()) {
             task.setEndTime(System.currentTimeMillis());
@@ -997,11 +993,10 @@ public class WorkflowExecutor {
         return executionDAOFacade.getRunningWorkflowIds(workflowName, version);
     }
 
-    // FIXME
-//    @EventListener(WorkflowEvaluationEvent.class)
-//    public void handleWorkflowEvaluationEvent(WorkflowEvaluationEvent wee) {
-//        decide(wee.getWorkflowModel());
-//    }
+    @EventListener(WorkflowEvaluationEvent.class)
+    public void handleWorkflowEvaluationEvent(WorkflowEvaluationEvent wee) {
+        decide(wee.getWorkflowModel());
+    }
 
     /** Records a metric for the "decide" process. */
     public WorkflowModel decide(String workflowId) {
@@ -1060,7 +1055,6 @@ public class WorkflowExecutor {
             boolean stateChanged = scheduleTask(workflow, tasksToBeScheduled); // start
 
             for (TaskModel task : outcome.tasksToBeScheduled) {
-                // FIXME
 //                executionDAOFacade.populateTaskData(task);
                 if (systemTaskRegistry.isSystemTask(task.getTaskType())
                         && NON_TERMINAL_TASK.test(task)) {
@@ -1335,8 +1329,6 @@ public class WorkflowExecutor {
         if (skipTaskRequest != null) {
             taskToBeSkipped.setInputData(skipTaskRequest.getTaskInput());
             taskToBeSkipped.setOutputData(skipTaskRequest.getTaskOutput());
-            taskToBeSkipped.setInputMessage(skipTaskRequest.getTaskInputMessage());
-            taskToBeSkipped.setOutputMessage(skipTaskRequest.getTaskOutputMessage());
         }
         executionDAOFacade.createTasks(Collections.singletonList(taskToBeSkipped));
         decide(workflow.getWorkflowId());

@@ -575,13 +575,8 @@ public class DeciderService {
         rescheduled.setStartTime(0);
         rescheduled.setEndTime(0);
         rescheduled.setWorkerId(null);
+        rescheduled.addInput(task.getInputData());
 
-        if (StringUtils.isNotBlank(task.getExternalInputPayloadStoragePath())) {
-            rescheduled.setExternalInputPayloadStoragePath(
-                    task.getExternalInputPayloadStoragePath());
-        } else {
-            rescheduled.addInput(task.getInputData());
-        }
         if (workflowTask != null && workflow.getWorkflowDefinition().getSchemaVersion() > 1) {
             Map<String, Object> taskInput =
                     parametersUtils.getTaskInputV2(

@@ -14,6 +14,7 @@ package com.netflix.conductor.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.netflix.conductor.schema.metadata.workflow.WorkflowDef;
 import com.netflix.conductor.schema.run.Workflow;
 import com.netflix.conductor.core.utils.Utils;
@@ -103,13 +104,11 @@ public class WorkflowModel {
 
     private Status previousStatus;
 
-    @JsonIgnore private Map<String, Object> input = new HashMap<>();
+    @JsonProperty("input")
+    private Map<String, Object> input = new HashMap<>();
 
-    @JsonIgnore private Map<String, Object> output = new HashMap<>();
-
-    @JsonIgnore private Map<String, Object> inputPayload = new HashMap<>();
-
-    @JsonIgnore private Map<String, Object> outputPayload = new HashMap<>();
+    @JsonProperty("output")
+    private Map<String, Object> output = new HashMap<>();
 
     public void setStatus(Status status) {
         // update previous status if current status changed
@@ -120,37 +119,11 @@ public class WorkflowModel {
     }
 
     @JsonIgnore
-    public Map<String, Object> getInput() {
-        if (!inputPayload.isEmpty() && !input.isEmpty()) {
-            input.putAll(inputPayload);
-            inputPayload = new HashMap<>();
-            return input;
-        } else if (inputPayload.isEmpty()) {
-            return input;
-        } else {
-            return inputPayload;
-        }
-    }
-
-    @JsonIgnore
     public void setInput(Map<String, Object> input) {
         if (input == null) {
             input = new HashMap<>();
         }
         this.input = input;
-    }
-
-    @JsonIgnore
-    public Map<String, Object> getOutput() {
-        if (!outputPayload.isEmpty() && !output.isEmpty()) {
-            output.putAll(outputPayload);
-            outputPayload = new HashMap<>();
-            return output;
-        } else if (outputPayload.isEmpty()) {
-            return output;
-        } else {
-            return outputPayload;
-        }
     }
 
     @JsonIgnore

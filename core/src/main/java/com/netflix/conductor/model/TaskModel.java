@@ -13,6 +13,7 @@
 package com.netflix.conductor.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.netflix.conductor.schema.metadata.tasks.Task;
 import com.netflix.conductor.schema.metadata.tasks.TaskDef;
 import com.netflix.conductor.schema.metadata.workflow.WorkflowTask;
@@ -119,17 +120,9 @@ public class TaskModel {
 
     private String domain;
 
-    private Object inputMessage;
-
-    private Object outputMessage;
-
     private int rateLimitPerFrequency;
 
     private int rateLimitFrequencyInSeconds;
-
-    private String externalInputPayloadStoragePath;
-
-    private String externalOutputPayloadStoragePath;
 
     private int workflowPriority;
 
@@ -150,27 +143,11 @@ public class TaskModel {
      */
     private boolean subworkflowChanged;
 
-    @JsonIgnore private Map<String, Object> inputPayload = new HashMap<>();
+    @JsonProperty("inputData")
+    private Map<String, Object> inputData = new HashMap<>();
 
-    @JsonIgnore private Map<String, Object> outputPayload = new HashMap<>();
-
-    @JsonIgnore private Map<String, Object> inputData = new HashMap<>();
-
-    @JsonIgnore private Map<String, Object> outputData = new HashMap<>();
-
-
-    @JsonIgnore
-    public Map<String, Object> getInputData() {
-        if (!inputPayload.isEmpty() && !inputData.isEmpty()) {
-            inputData.putAll(inputPayload);
-            inputPayload = new HashMap<>();
-            return inputData;
-        } else if (inputPayload.isEmpty()) {
-            return inputData;
-        } else {
-            return inputPayload;
-        }
-    }
+    @JsonProperty("outputData")
+    private Map<String, Object> outputData = new HashMap<>();
 
     @JsonIgnore
     public void setInputData(Map<String, Object> inputData) {
@@ -180,23 +157,6 @@ public class TaskModel {
         this.inputData = inputData;
     }
 
-    @JsonIgnore
-    public Map<String, Object> getOutputData() {
-        if (!outputPayload.isEmpty() && !outputData.isEmpty()) {
-            // Combine payload + data
-            // data has precedence over payload because:
-            //  with external storage enabled, payload contains the old values
-            //  while data contains the latest and if payload took precedence, it
-            //  would remove latest outputs
-            outputPayload.forEach(outputData::putIfAbsent);
-            outputPayload = new HashMap<>();
-            return outputData;
-        } else if (outputPayload.isEmpty()) {
-            return outputData;
-        } else {
-            return outputPayload;
-        }
-    }
 
     @JsonIgnore
     public void setOutputData(Map<String, Object> outputData) {
@@ -268,40 +228,10 @@ public class TaskModel {
         return copy;
     }
 
-    public void externalizeInput(String path) {
-        this.inputPayload = this.inputData;
-        this.inputData = new HashMap<>();
-        this.externalInputPayloadStoragePath = path;
-    }
-
-    public void externalizeOutput(String path) {
-        this.outputPayload = this.outputData;
-        this.outputData = new HashMap<>();
-        this.externalOutputPayloadStoragePath = path;
-    }
-
-    public void internalizeInput(Map<String, Object> data) {
-        this.inputData = new HashMap<>();
-        this.inputPayload = data;
-    }
-
-    public void internalizeOutput(Map<String, Object> data) {
-        this.outputData = new HashMap<>();
-        this.outputPayload = data;
-    }
-
     public Task toTask() {
         Task task = new Task();
         BeanUtils.copyProperties(this, task);
         task.setStatus(Task.Status.valueOf(status.name()));
-
-        // ensure that input/output is properly represented
-        if (externalInputPayloadStoragePath != null) {
-            task.setInputData(new HashMap<>());
-        }
-        if (externalOutputPayloadStoragePath != null) {
-            task.setOutputData(new HashMap<>());
-        }
         return task;
     }
 
@@ -331,7 +261,5 @@ public class TaskModel {
 
     public void clearOutput() {
         this.outputData.clear();
-        this.outputPayload.clear();
-        this.externalOutputPayloadStoragePath = null;
     }
 }
