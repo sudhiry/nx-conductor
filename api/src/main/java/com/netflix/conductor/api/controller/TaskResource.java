@@ -16,7 +16,6 @@ import com.netflix.conductor.schema.metadata.tasks.PollData;
 import com.netflix.conductor.schema.metadata.tasks.Task;
 import com.netflix.conductor.schema.metadata.tasks.TaskExecLog;
 import com.netflix.conductor.schema.metadata.tasks.TaskResult;
-import com.netflix.conductor.schema.run.ExternalStorageLocation;
 import com.netflix.conductor.schema.run.SearchResult;
 import com.netflix.conductor.schema.run.TaskSummary;
 import com.netflix.conductor.service.TaskService;

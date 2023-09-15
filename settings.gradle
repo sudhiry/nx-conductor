@@ -11,4 +11,5 @@ include 'persistence'
 include 'server'
 include 'search'
 include 'lock'
+include 'events'
 

@@ -17,10 +17,7 @@ import com.netflix.conductor.schema.metadata.tasks.Task;
 import com.netflix.conductor.schema.metadata.workflow.WorkflowDef;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
@@ -48,7 +45,6 @@ public class Workflow extends Auditable {
             this.terminal = terminal;
             this.successful = successful;
         }
-
     }
 
     private WorkflowStatus status = WorkflowStatus.RUNNING;
@@ -80,10 +76,6 @@ public class Workflow extends Auditable {
     private Set<String> failedReferenceTaskNames = new HashSet<>();
 
     private WorkflowDef workflowDefinition;
-
-    private String externalInputPayloadStoragePath;
-
-    private String externalOutputPayloadStoragePath;
 
     @Min(value = 0, message = "workflow priority: ${validatedValue} should be minimum {value}")
     @Max(value = 99, message = "workflow priority: ${validatedValue} should be maximum {value}")
@@ -180,8 +172,6 @@ public class Workflow extends Auditable {
         copy.setTaskToDomain(taskToDomain);
         copy.setFailedReferenceTaskNames(failedReferenceTaskNames);
         copy.setFailedTaskNames(failedTaskNames);
-        copy.setExternalInputPayloadStoragePath(externalInputPayloadStoragePath);
-        copy.setExternalOutputPayloadStoragePath(externalOutputPayloadStoragePath);
         return copy;
     }
 

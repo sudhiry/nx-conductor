@@ -60,10 +60,6 @@ public class TaskSummary {
 
     private String taskId;
 
-    private String externalInputPayloadStoragePath;
-
-    private String externalOutputPayloadStoragePath;
-
     private int workflowPriority;
 
     private String domain;
@@ -98,13 +94,6 @@ public class TaskSummary {
 
         if (task.getEndTime() > 0) {
             this.executionTime = task.getEndTime() - task.getStartTime();
-        }
-
-        if (StringUtils.isNotBlank(task.getExternalInputPayloadStoragePath())) {
-            this.externalInputPayloadStoragePath = task.getExternalInputPayloadStoragePath();
-        }
-        if (StringUtils.isNotBlank(task.getExternalOutputPayloadStoragePath())) {
-            this.externalOutputPayloadStoragePath = task.getExternalOutputPayloadStoragePath();
         }
     }
 
